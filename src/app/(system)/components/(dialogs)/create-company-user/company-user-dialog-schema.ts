@@ -19,3 +19,7 @@ export const SecondUserCompanyCreateSchema = z.object({
     )
     .min(1, { message: "É nescessário selecionar pelo menos uma unidade" }),
 });
+
+export type UserCompanySchemaType = z.infer<
+  typeof FirstUserCompanyCreateSchema & typeof SecondUserCompanyCreateSchema
+>;

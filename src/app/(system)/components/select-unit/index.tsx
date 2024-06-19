@@ -11,6 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { BiBuilding, BiSend } from "react-icons/bi";
 import { permanentRedirect } from "next/navigation";
+import { units } from "@/lib/data/company";
 
 interface SelectUnitProps {
   companyAndUnits: any;
@@ -21,10 +22,11 @@ export async function SelectUnitAndAccess({
   const handleSelectUnit = async (data: FormData) => {
     "use server";
 
-    const unit = data.get("unit");
+    const unitSlug = data.get("unit");
 
-    if (unit) {
-      permanentRedirect(`/app/${unit}`);
+    if (unitSlug) {
+      const unit = units.find((unit: any) => unit.slug === unitSlug);
+      permanentRedirect(`/app/${unit?.company.slug}/${unitSlug}`);
     }
   };
 
@@ -37,7 +39,7 @@ export async function SelectUnitAndAccess({
         <BiBuilding className="text-secondary-foreground" />
       </span>
       <Select
-        disabled={companyAndUnits.length === 0}
+        disabled={units.length === 0}
         name="unit"
       >
         <SelectTrigger className="w-[200px] pl-7">
@@ -45,7 +47,7 @@ export async function SelectUnitAndAccess({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {companyAndUnits.map((unit: any) => (
+            {units.map((unit: any) => (
               <SelectItem
                 key={unit.id}
                 value={unit.slug}
@@ -58,7 +60,7 @@ export async function SelectUnitAndAccess({
         </SelectContent>
       </Select>
       <Button
-        disabled={companyAndUnits.length === 0}
+        disabled={units.length === 0}
         className="text-lg "
         variant={"secondary"}
         size={"icon"}

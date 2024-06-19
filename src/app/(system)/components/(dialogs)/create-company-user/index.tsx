@@ -53,9 +53,7 @@ export function CreateUserCompanyDialog({
   useEffect(() => {
     window.addEventListener("resize", () => {
       const getIfIsMobile = window.matchMedia("(max-width: 640px)");
-      // console.log(getIfIsMobile.matches);
 
-      console.log(unitsList, "unitsList");
       setIsMobile(getIfIsMobile.matches);
     });
   }, []);

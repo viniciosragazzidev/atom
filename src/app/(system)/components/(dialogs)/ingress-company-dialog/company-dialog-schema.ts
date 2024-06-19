@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const FirstCompanyDialogSchema = z.object({
+  id: z.string().optional(),
   name: z.string().min(1, { message: "Nome é obrigatório" }),
   document: z.string().min(11, { message: "CNPJ inválido" }),
   fundationDate: z
@@ -49,3 +50,7 @@ export const SecondProfileDialogSchema = z.object({
     { message: "Estado é obrigatório" }
   ),
 });
+
+export type CompanySchemaType = z.infer<
+  typeof FirstCompanyDialogSchema & typeof SecondProfileDialogSchema
+>;

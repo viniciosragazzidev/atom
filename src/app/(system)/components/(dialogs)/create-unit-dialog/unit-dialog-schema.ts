@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 export const FirstUnitCreateSchema = z.object({
+  id: z.string().optional(),
+  slug: z.string().optional(),
   name: z.string().min(1, { message: "Nome é obrigatório" }),
   phone: z.string().min(9, { message: "Telefone inválido" }),
   email: z.string().email({ message: "Email inválido" }),
@@ -46,3 +48,7 @@ export const SecondUnitCreateSchema = z.object({
   ),
   zipCode: z.string().min(8, { message: "CEP inválido" }),
 });
+
+export type UnitSchemaType = z.infer<
+  typeof FirstUnitCreateSchema & typeof SecondUnitCreateSchema
+>;
