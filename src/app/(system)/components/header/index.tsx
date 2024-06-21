@@ -6,17 +6,46 @@ import { BiBell, BiCog } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const AppNavbarHeader = ({ companyAndUnits }: { companyAndUnits: any }) => {
+const AppNavbarHeader = ({
+  companyAndUnits,
+  completeNav,
+}: {
+  completeNav?: boolean;
+  companyAndUnits: any;
+}) => {
   return (
-    <div className="w-full flex justify-center container  top-0 left-0 py-6">
+    <div className="w-full flex justify-center max-md:px-2 md:container  top-0 left-0 py-6  ">
       <header className="w-full h-full flex justify-between items-center">
-        <Logo />
+        {!completeNav && <Logo />}
 
-        <div className="flex items-center gap-3">
-          <span className="hidden sm:block">
+        {/* {completeNav && (
+          <nav className="">
+            <ul className=" gap-7 max-lg:gap-5 items-center hidden md:flex">
+              <li className="text-blue-400 font-semibold">
+                <a href="#">Dashboard</a>
+              </li>
+              <li>
+                <a href="#">Serviços</a>
+              </li>
+              <li>
+                <a href="#">Vendas</a>
+              </li>
+              <li>
+                <a href="#">Financeiro</a>
+              </li>
+
+              <li>
+                <a href="#">Atendimento</a>
+              </li>
+            </ul>
+          </nav>
+        )} */}
+
+        <div className="flex items-center w-full justify-end gap-3 n">
+          <span className="hidden sm:block ">
             <SelectUnitAndAccess companyAndUnits={companyAndUnits} />
           </span>
-          <div className="flex">
+          <div className=" block">
             <Button variant={"ghost"}>
               <BiCog className="text-lg" />
             </Button>
