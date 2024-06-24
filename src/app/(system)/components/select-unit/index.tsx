@@ -27,7 +27,7 @@ export async function SelectUnitAndAccess({
 
     if (unitSlug) {
       const unit = units.find((unit: any) => unit.slug === unitSlug);
-      console.log(unit);
+      console.log(units);
 
       permanentRedirect(`/app/${unit?.company.slug}/${unitSlug}`);
     }
