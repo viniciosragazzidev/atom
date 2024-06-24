@@ -18,35 +18,42 @@ import {
   FiSettings,
   FiShoppingBag,
   FiTool,
+  FiX,
 } from "react-icons/fi";
 import { LuWallet } from "react-icons/lu";
+import { usePathname } from "next/navigation";
 
-const AsideMenu = () => {
+const AsideMenu = ({
+  params,
+}: {
+  params: { companySlug: string; unitSlug: string };
+}) => {
   const [open, setOpen] = React.useState(false);
+  const previousURL = `/app/${params.companySlug}/${params.unitSlug}`;
   const menu_items = [
     {
       name: "Dashboard",
-      href: "#",
+      href: previousURL,
       icon: <FiGrid />,
     },
     {
       name: "Servicos",
-      href: "/services",
+      href: `${previousURL}/services`,
       icon: <FiTool />,
     },
     {
       name: "Vendas",
-      href: "/sales",
+      href: `${previousURL}/sales`,
       icon: <FiShoppingBag />,
     },
     {
       name: "Financeiro",
-      href: "/finance",
+      href: `${previousURL}/finance`,
       icon: <LuWallet />,
     },
     {
       name: "Atendimento",
-      href: "/atendimento",
+      href: `${previousURL}/support`,
       icon: <FiPhoneCall />,
     },
   ];
@@ -63,20 +70,31 @@ const AsideMenu = () => {
       icon: <FiHeadphones />,
     },
   ];
+  const path = usePathname();
+
+  const [currentRoute, setCurrentRoute] = React.useState("");
+
+  React.useEffect(() => {
+    const route = path.split("/")[4] ? path.split("/")[4] : "";
+
+    setCurrentRoute(route);
+
+    console.log(route);
+  }, [path]);
   return (
     <aside
       className={`${
-        open ? "w-64" : "w-24"
-      } h-screen border-r border-border/40 py-10 relative  mr-2 overflow-hidden`}
+        open ? "w-full min-w-[220px] max-w-[220px]" : "w-24"
+      } h-screen border-r border-border/40 py-10 relative  mr-2 overflow-hidden transition-all `}
     >
       <div
-        className={`flex flex-col w-52 h-full gap-10 absolute top-10 left-0 transition-all ${
+        className={`flex flex-col w-[220px] h-full gap-10 absolute top-10 left-0 transition-all ${
           open ? "translate-x-0" : "translate-x-[-100vw]"
         }`}
       >
-        <div className="flex w-full items-center justify-between px-4">
+        <div className="flex w-full items-center justify-between px-5">
           <Logo className="max-w-24" />
-          <BsChevronDoubleLeft
+          <FiX
             className=" text-sm cursor-pointer "
             onClick={() => setOpen(!open)}
           />
@@ -92,7 +110,13 @@ const AsideMenu = () => {
                 className="  hover:bg-accent/50 py-2 px-4 transition-all hover:shadow-sm rounded-full"
               >
                 <Link href={item.href} className="flex items-center gap-2">
-                  <span className="text-base text-primary">{item.icon}</span>{" "}
+                  <span
+                    className={`text-base text-primary ${
+                      currentRoute === item.href && "text-primary"
+                    }`}
+                  >
+                    {item.icon}
+                  </span>{" "}
                   {item.name}
                 </Link>
               </li>
@@ -110,7 +134,13 @@ const AsideMenu = () => {
                 className="  hover:bg-accent/50 py-2 px-4 transition-all hover:shadow-sm rounded-full"
               >
                 <Link href={item.href} className="flex items-center gap-2">
-                  <span className="text-base text-primary">{item.icon}</span>{" "}
+                  <span
+                    className={`text-base text-primary ${
+                      currentRoute === item.href && "text-primary"
+                    }`}
+                  >
+                    {item.icon}
+                  </span>{" "}
                   {item.name}
                 </Link>
               </li>
@@ -148,7 +178,13 @@ const AsideMenu = () => {
                   href={item.href}
                   className="flex items-center justify-center gap-2"
                 >
-                  <span className="text-lg">{item.icon}</span>{" "}
+                  <span
+                    className={`text-lg ${
+                      currentRoute === item.href && "text-primary"
+                    }`}
+                  >
+                    {item.icon}
+                  </span>{" "}
                 </Link>
               </li>
             ))}
@@ -166,7 +202,13 @@ const AsideMenu = () => {
                   href={item.href}
                   className="flex items-center justify-center gap-2"
                 >
-                  <span className="text-lg">{item.icon}</span>{" "}
+                  <span
+                    className={`text-lg  ${
+                      currentRoute === item.href && "text-primary"
+                    }`}
+                  >
+                    {item.icon}
+                  </span>{" "}
                 </Link>
               </li>
             ))}
