@@ -16,8 +16,8 @@ const LayoutUnitArea = ({ children, params }: LayoutUnitAreaProps) => {
   return (
     <div className="flex w-full ">
       <AsideMenu params={params} />
-      <div className="flex w-full flex-col">
-        <AppNavbarHeader completeNav companyAndUnits={units} />
+      <div className="flex w-full flex-col divide-y divide-border/40">
+        <AppNavbarHeader params={params} completeNav companyAndUnits={units} />
         {children}
       </div>
     </div>

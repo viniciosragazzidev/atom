@@ -17,10 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${GeistSans.className} relative`}
-    >
+    <html lang="en" className={`${GeistSans.className} relative`}>
       <body>
         <ThemeProvider
           attribute="class"

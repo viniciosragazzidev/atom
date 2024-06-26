@@ -61,25 +61,27 @@ const AsideMenu = ({
   const menu_system = [
     {
       name: "Ajustes",
-      href: "/settings",
+      href: `${previousURL}/settings`,
       icon: <FiSettings />,
     },
     {
       name: "Suporte",
-      href: "/support",
+      href: `${previousURL}/support`,
       icon: <FiHeadphones />,
     },
   ];
   const path = usePathname();
 
   const [currentRoute, setCurrentRoute] = React.useState("");
+  const getFourthItemInPath = (path: string) => {
+    const splittedPath = path.split("/");
 
+    return splittedPath[4] || "";
+  };
   React.useEffect(() => {
-    const route = path.split("/")[4] ? path.split("/")[4] : "";
+    const route = path;
 
-    setCurrentRoute(route);
-
-    console.log(route);
+    setCurrentRoute(getFourthItemInPath(route));
   }, [path]);
   return (
     <aside
@@ -100,7 +102,7 @@ const AsideMenu = ({
           />
         </div>
         <nav className="flex flex-col gap-6  px-2 pt-5">
-          <span className="font-semibold text-accent-foreground/80 uppercase  text-sm text-nowrap  px-4">
+          <span className="font-semibold text-accent-foreground/80 uppercase  text-xs text-nowrap  px-4">
             Menu Principal
           </span>
           <ul className=" flex flex-col gap-3 text-sm">
@@ -112,7 +114,8 @@ const AsideMenu = ({
                 <Link href={item.href} className="flex items-center gap-2">
                   <span
                     className={`text-base text-primary ${
-                      currentRoute === item.href && "text-primary"
+                      currentRoute === getFourthItemInPath(item.href) &&
+                      "text-primary"
                     }`}
                   >
                     {item.icon}
@@ -124,7 +127,7 @@ const AsideMenu = ({
           </ul>
         </nav>
         <nav className="flex flex-col gap-6  px-2">
-          <span className="font-semibold text-accent-foreground/80 uppercase  text-sm  text-nowrap px-4">
+          <span className="font-semibold text-accent-foreground/80 uppercase   text-xs  text-nowrap px-4">
             Menu do sistema
           </span>
           <ul className=" flex flex-col gap-3 text-sm">
@@ -136,7 +139,8 @@ const AsideMenu = ({
                 <Link href={item.href} className="flex items-center gap-2">
                   <span
                     className={`text-base text-primary ${
-                      currentRoute === item.href && "text-primary"
+                      currentRoute === getFourthItemInPath(item.href) &&
+                      "text-primary"
                     }`}
                   >
                     {item.icon}
@@ -180,7 +184,8 @@ const AsideMenu = ({
                 >
                   <span
                     className={`text-lg ${
-                      currentRoute === item.href && "text-primary"
+                      currentRoute === getFourthItemInPath(item.href) &&
+                      "text-primary"
                     }`}
                   >
                     {item.icon}
@@ -204,7 +209,8 @@ const AsideMenu = ({
                 >
                   <span
                     className={`text-lg  ${
-                      currentRoute === item.href && "text-primary"
+                      currentRoute === getFourthItemInPath(item.href) &&
+                      "text-primary"
                     }`}
                   >
                     {item.icon}

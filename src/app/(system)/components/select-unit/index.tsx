@@ -15,19 +15,20 @@ import { units } from "@/lib/data/company";
 
 interface SelectUnitProps {
   companyAndUnits: any;
+  params?: any;
 }
 export async function SelectUnitAndAccess({
   companyAndUnits,
+  params = "",
 }: SelectUnitProps) {
   const handleSelectUnit = async (data: FormData) => {
     "use server";
 
     const unitSlug = data.get("unit");
-    console.log();
+    console.log(params.unitSlug);
 
     if (unitSlug) {
       const unit = units.find((unit: any) => unit.slug === unitSlug);
-      console.log(units);
 
       permanentRedirect(`/app/${unit?.company.slug}/${unitSlug}`);
     }
@@ -35,14 +36,18 @@ export async function SelectUnitAndAccess({
 
   return (
     <form
-      className="relative flex items-center gap-2"
+      className="relative flex items-center gap-2 text-sm"
       action={handleSelectUnit}
     >
       <span className="absolute left-[5px] top-1/2 -translate-y-1/2 ">
         <BiBuilding className="text-secondary-foreground" />
       </span>
-      <Select disabled={units.length === 0} name="unit">
-        <SelectTrigger className="w-[200px] pl-7">
+      <Select
+        defaultValue={params.unitSlug}
+        disabled={units.length === 0}
+        name="unit"
+      >
+        <SelectTrigger className="w-[200px] pl-7 ">
           <SelectValue placeholder="Selecione a unidade" />
         </SelectTrigger>
         <SelectContent>
@@ -61,7 +66,7 @@ export async function SelectUnitAndAccess({
       </Select>
       <Button
         disabled={units.length === 0}
-        className="text-lg "
+        className="text-base "
         variant={"default"}
         size={"icon"}
         type="submit"

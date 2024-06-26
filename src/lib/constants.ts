@@ -60,3 +60,12 @@ export const areasDeAtuacao = [
   "Serviços de Solda",
   "Manutenção de Piscinas",
 ];
+
+export const statusData = [
+  "Aberto",
+  "Entregue",
+  "Cancelado",
+  "Iniciado",
+  "Aguardando",
+  "Concluído",
+];
