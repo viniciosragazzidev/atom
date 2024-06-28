@@ -31,6 +31,7 @@ export type ProfileType = {
   state?: string;
   User?: UserType[];
   Company?: CompanyType[];
+  Unit?: UnitType[];
   companyId?: string;
 };
 

@@ -11,27 +11,24 @@ import {
 import { Button } from "@/components/ui/button";
 import { BiBuilding, BiSend } from "react-icons/bi";
 import { permanentRedirect } from "next/navigation";
-import { units } from "@/lib/data/company";
+import { getCompanyAndUnits } from "./action";
 
 interface SelectUnitProps {
   companyAndUnits: any;
   params?: any;
 }
-export async function SelectUnitAndAccess({
-  companyAndUnits,
-  params = "",
-}: SelectUnitProps) {
+export async function SelectUnitAndAccess({ params = "" }: SelectUnitProps) {
+  const data = await getCompanyAndUnits();
+  const units = data?.units;
+  const company = data?.company;
+  console.log(company);
+
   const handleSelectUnit = async (data: FormData) => {
     "use server";
 
     const unitSlug = data.get("unit");
-    console.log(params.unitSlug);
 
-    if (unitSlug) {
-      const unit = units.find((unit: any) => unit.slug === unitSlug);
-
-      permanentRedirect(`/app/${unit?.company.slug}/${unitSlug}`);
-    }
+    permanentRedirect(`/app/${company![0].slug!}/${unitSlug}`);
   };
 
   return (
@@ -44,7 +41,7 @@ export async function SelectUnitAndAccess({
       </span>
       <Select
         defaultValue={params.unitSlug}
-        disabled={units.length === 0}
+        disabled={units?.length === 0}
         name="unit"
       >
         <SelectTrigger className="w-[200px] pl-7 ">
@@ -52,7 +49,7 @@ export async function SelectUnitAndAccess({
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {units.map((unit: any) => (
+            {units?.map((unit: any) => (
               <SelectItem
                 key={unit.id}
                 value={unit.slug}
@@ -65,7 +62,7 @@ export async function SelectUnitAndAccess({
         </SelectContent>
       </Select>
       <Button
-        disabled={units.length === 0}
+        disabled={units?.length === 0}
         className="text-base "
         variant={"default"}
         size={"icon"}
