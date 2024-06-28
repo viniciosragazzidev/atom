@@ -8,7 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import React from "react";
-import { FiEdit, FiEdit2 } from "react-icons/fi";
+import { FiEdit } from "react-icons/fi";
 import AddService from "./add-service";
 import { OSType } from "@/lib/@types";
 import { formateDate } from "@/lib/data/company";
