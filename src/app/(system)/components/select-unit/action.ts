@@ -6,7 +6,9 @@ export const getCompanyAndUnits = async () => {
   const user = session?.user;
   const profileId = user?.profileId;
   const profileFetch = await fetch(
-    `http://localhost:3000/api/profile/${profileId}`,
+    `${
+      process.env.PATHNAME || "http://localhost:3000/"
+    }/api/profile/${profileId}`,
     {
       method: "GET",
       next: {
