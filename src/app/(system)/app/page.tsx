@@ -87,14 +87,17 @@ const AppHomePage = async () => {
 
   console.log(path);
   if (profileId) {
-    profile = await fetch(`http://localhost:3000/api/profile/${profileId}`, {
-      method: "GET",
-      next: {
-        revalidate: 1000,
+    profile = await fetch(
+      `${process.env.PATHNAME || "http://localhost:3000/"}${profileId}`,
+      {
+        method: "GET",
+        next: {
+          revalidate: 1000,
 
-        tags: ["profile", profileId],
-      },
-    })
+          tags: ["profile", profileId],
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => data.profile);
   }
