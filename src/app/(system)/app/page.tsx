@@ -103,7 +103,7 @@ const AppHomePage = async () => {
 
   return (
     <main className="w-full h-screen overflow-hidden  ">
-      <AppNavbarHeader companyAndUnits={companyAndUnits} />
+      <AppNavbarHeader />
 
       <ScrollArea className="w-full h-full max-h-[calc(100vh-80px)] flex items-center ">
         <div className="w-full max-md:min-h-72 md:h-72  container flex justify-center ">
