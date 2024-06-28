@@ -30,6 +30,9 @@ export const getCompanyAndUnits = async () => {
     };
   } catch (error) {
     console.log(error);
-    return error;
+    return {
+      units: [],
+      company: [],
+    };
   }
 };
