@@ -1,5 +1,4 @@
 import AppNavbarHeader from "@/app/(system)/components/header";
-import { units } from "@/lib/data/company";
 import React from "react";
 
 import AsideMenu from "./components/aside-menu";
@@ -19,11 +18,7 @@ const LayoutUnitArea = ({ children, params }: LayoutUnitAreaProps) => {
       <div className="flex w-full ">
         <AsideMenu params={params} />
         <div className="flex w-full flex-col divide-y divide-border/40">
-          <AppNavbarHeader
-            params={params}
-            completeNav
-            companyAndUnits={units}
-          />
+          <AppNavbarHeader params={params} completeNav />
           {children}
         </div>
       </div>

@@ -7,12 +7,10 @@ import { Button } from "@/components/ui/button";
 import AvatarPopover from "../avatar-popover";
 
 const AppNavbarHeader = ({
-  companyAndUnits,
   completeNav,
   params,
 }: {
   completeNav?: boolean;
-  companyAndUnits: any;
   params?: any;
 }) => {
   return (
@@ -26,10 +24,7 @@ const AppNavbarHeader = ({
           }  gap-3`}
         >
           <span className="hidden sm:block ">
-            <SelectUnitAndAccess
-              params={params}
-              companyAndUnits={companyAndUnits}
-            />
+            <SelectUnitAndAccess params={params} />
           </span>
           <div className="flex gap-3">
             <div className=" block">

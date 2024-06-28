@@ -1,16 +1,16 @@
 // import { faker } from "@faker-js/faker/locale/pt_BR";
 // import { CompanyType, OSType, UnitType } from "../@types";
 
-// import dayjs from "dayjs";
-// import relativeTime from "dayjs/plugin/relativeTime";
-// import "dayjs/locale/pt-br";
-// dayjs.extend(relativeTime);
-// dayjs.locale("pt-br");
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/pt-br";
+dayjs.extend(relativeTime);
+dayjs.locale("pt-br");
 // import { brStates, statusData } from "../constants";
 
-// export const formateDate = (date: Date) => {
-//   return dayjs().to(date);
-// };
+export const formateDate = (date: Date) => {
+  return dayjs().to(date);
+};
 
 // let company = Array.from({ length: 1 }).map(() => {
 //   const name = faker.company.name();

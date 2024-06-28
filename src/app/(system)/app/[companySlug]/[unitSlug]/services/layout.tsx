@@ -1,5 +1,4 @@
 import AppNavbarHeader from "@/app/(system)/components/header";
-import { units } from "@/lib/data/company";
 import React from "react";
 import NavbarTop from "./components/navbar-top";
 

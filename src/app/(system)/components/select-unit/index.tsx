@@ -14,7 +14,6 @@ import { permanentRedirect } from "next/navigation";
 import { getCompanyAndUnits } from "./action";
 
 interface SelectUnitProps {
-  companyAndUnits: any;
   params?: any;
 }
 export async function SelectUnitAndAccess({ params = "" }: SelectUnitProps) {
