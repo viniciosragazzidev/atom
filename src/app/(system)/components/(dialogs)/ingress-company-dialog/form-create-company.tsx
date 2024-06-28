@@ -17,10 +17,10 @@ import { areasDeAtuacao, brStates } from "@/lib/constants";
 import { toast } from "sonner";
 import {
   FirstCompanyDialogSchema,
-  SecondProfileDialogSchema,
+  SecondCompanyDialogSchema,
 } from "./company-dialog-schema";
 import { CircleAlert } from "lucide-react";
-import { sendProfile } from "./actions/action";
+import { sendCompany } from "./actions/action";
 import ErrorMessage from "@/components/error-message";
 import { PiSpinner } from "react-icons/pi";
 import { AlertDialogFooter } from "@/components/ui/alert-dialog";
@@ -51,9 +51,13 @@ const FormCreateCompany = ({
 
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+
+  const [street, setStreet] = useState("");
+  const [numberAddress, setNumberAddress] = useState("");
+  const [neighborhoodAddress, setNeighborhoodAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
+  const [zipCode, setZipCode] = useState("");
 
   const [errors, setErrors] = useState<any>();
   const [submitLoading, setSubmitLoading] = useState(false);
@@ -86,11 +90,14 @@ const FormCreateCompany = ({
     const data = {
       email,
       phone,
-      address,
+      street,
+      numberAddress,
+      neighborhoodAddress,
       city,
       state,
+      zipCode,
     };
-    const verify = SecondProfileDialogSchema.safeParse(data);
+    const verify = SecondCompanyDialogSchema.safeParse(data);
 
     if (verify.success) {
       const itens = {
@@ -102,19 +109,24 @@ const FormCreateCompany = ({
         areasOfActivity,
         email,
         phone,
-        address,
+        street,
+        numberAddress,
+        neighborhoodAddress,
         city,
         state,
+        zipCode,
       };
 
       setSubmitLoading(true);
-      const result = await sendProfile(itens);
-      if (result) {
+      const result = await sendCompany(itens);
+      const d = JSON.parse(result as string);
+      if (d.message === "success") {
         toast("Dados salvos com sucesso", {});
         resetFields();
         setSubmitLoading(false);
         setOnOpen(false);
       }
+      console.log(d);
     } else {
       const error = verify.error.issues;
 
@@ -134,9 +146,12 @@ const FormCreateCompany = ({
     setDocument("");
     setEmail("");
     setPhone("");
-    setAddress("");
+    setStreet("");
+    setNumberAddress("");
+    setNeighborhoodAddress("");
     setCity("");
     setState("");
+    setZipCode("");
 
     setErrors([]);
   };
@@ -153,10 +168,7 @@ const FormCreateCompany = ({
   }, [confirmClose, onOpen]);
   return (
     <div className="w-full">
-      <form
-        className="overflow-hidden relative"
-        action=""
-      >
+      <form className="overflow-hidden relative" action="">
         <div
           className={`flex flex-col gap-4 ${
             currentStep === 1
@@ -166,10 +178,7 @@ const FormCreateCompany = ({
         >
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="name"
-              >
+              <Label className="text-sm" htmlFor="name">
                 Nome
               </Label>
               <Input
@@ -179,16 +188,10 @@ const FormCreateCompany = ({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="name"
-              />
+              <ErrorMessage errors={errors} name="name" />
             </div>
             <div className="flex flex-col gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="document"
-              >
+              <Label className="text-sm" htmlFor="document">
                 CNPJ
               </Label>
               <Input
@@ -199,18 +202,12 @@ const FormCreateCompany = ({
                 value={document}
                 onChange={(e) => setDocument(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="document"
-              />
+              <ErrorMessage errors={errors} name="document" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="inscEstadual"
-              >
+              <Label className="text-sm" htmlFor="inscEstadual">
                 Inscrição Estadual
               </Label>
               <Input
@@ -220,16 +217,10 @@ const FormCreateCompany = ({
                 value={inscEstadual}
                 onChange={(e) => setInscEstadual(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="inscEstadual"
-              />
+              <ErrorMessage errors={errors} name="inscEstadual" />
             </div>
             <div className="flex flex-col gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="inscMunicipal"
-              >
+              <Label className="text-sm" htmlFor="inscMunicipal">
                 Inscrição Municipal
               </Label>
               <Input
@@ -240,18 +231,12 @@ const FormCreateCompany = ({
                 value={inscMunicipal}
                 onChange={(e) => setInscMunicipal(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="inscMunicipal"
-              />
+              <ErrorMessage errors={errors} name="inscMunicipal" />
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col col-span-1 gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="fundationDate"
-              >
+              <Label className="text-sm" htmlFor="fundationDate">
                 Data de Fundação
               </Label>
               <Input
@@ -261,16 +246,10 @@ const FormCreateCompany = ({
                 value={fundationDate}
                 onChange={(e) => setFundationDate(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="fundationDate"
-              />
+              <ErrorMessage errors={errors} name="fundationDate" />
             </div>
             <div className="flex flex-col col-span-1 gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="areasOfActivity"
-              >
+              <Label className="text-sm" htmlFor="areasOfActivity">
                 Areas de Atuação
               </Label>
               <Select
@@ -281,16 +260,10 @@ const FormCreateCompany = ({
                 <SelectTrigger className="w-full rounded-xl">
                   <SelectValue placeholder="Selecione..." />
                 </SelectTrigger>
-                <SelectContent
-                  className="h-60"
-                  side="top"
-                >
+                <SelectContent className="h-60" side="top">
                   <SelectGroup>
                     {areasDeAtuacao.map((areas, index) => (
-                      <SelectItem
-                        key={index}
-                        value={areas}
-                      >
+                      <SelectItem key={index} value={areas}>
                         {areas}
                       </SelectItem>
                     ))}
@@ -298,10 +271,7 @@ const FormCreateCompany = ({
                 </SelectContent>
               </Select>
 
-              <ErrorMessage
-                errors={errors}
-                name="areasOfActivity"
-              />
+              <ErrorMessage errors={errors} name="areasOfActivity" />
             </div>
           </div>
         </div>
@@ -315,10 +285,7 @@ const FormCreateCompany = ({
         >
           <div className="grid grid-cols-2 gap-4">
             <div className="flex flex-col gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="email"
-              >
+              <Label className="text-sm" htmlFor="email">
                 Email
               </Label>
               <Input
@@ -328,16 +295,10 @@ const FormCreateCompany = ({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="email"
-              />
+              <ErrorMessage errors={errors} name="email" />
             </div>
             <div className="flex flex-col gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="phone"
-              >
+              <Label className="text-sm" htmlFor="phone">
                 Telefone
               </Label>
               <Input
@@ -346,85 +307,103 @@ const FormCreateCompany = ({
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="phone"
-              />
+              <ErrorMessage errors={errors} name="phone" />
             </div>
           </div>
-          <div className="grid grid-cols-6 gap-4">
-            <div className="flex flex-col col-span-3 gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="address"
-              >
-                Endereço
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm" htmlFor="street">
+                Rua
               </Label>
               <Input
-                id="address"
-                placeholder="Endereço"
-                value={address}
-                onChange={(e) => setAddress(e.target.value)}
+                id="street"
+                placeholder="Rua"
+                required
+                value={street}
+                onChange={(e) => setStreet(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="address"
-              />
+              <ErrorMessage errors={errors} name="street" />
             </div>
-            <div className="flex flex-col col-span-2 gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="city"
-              >
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm" htmlFor="numberAddress">
+                Número
+              </Label>
+              <Input
+                id="numberAddress"
+                placeholder="Número"
+                required
+                value={numberAddress}
+                onChange={(e) => setNumberAddress(e.target.value)}
+              />
+              <ErrorMessage errors={errors} name="numberAddress" />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm" htmlFor="neighborhoodAddress">
+                Bairro
+              </Label>
+              <Input
+                id="neighborhoodAddress"
+                placeholder="Bairro"
+                required
+                value={neighborhoodAddress}
+                onChange={(e) => setNeighborhoodAddress(e.target.value)}
+              />
+              <ErrorMessage errors={errors} name="neighborhoodAddress" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm" htmlFor="city">
                 Cidade
               </Label>
               <Input
                 id="city"
                 placeholder="Cidade"
+                required
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
               />
-              <ErrorMessage
-                errors={errors}
-                name="city"
-              />
+              <ErrorMessage errors={errors} name="city" />
             </div>
-            <div className="flex flex-col col-span-1 gap-2">
-              <Label
-                className="text-sm"
-                htmlFor="state"
-              >
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm" htmlFor="state">
                 Estado
               </Label>
               <Select
-                name="state"
-                value={state}
                 onValueChange={setState}
+                value={state}
+                name="state"
+                required
               >
-                <SelectTrigger className="w-full rounded-xl">
-                  <SelectValue placeholder="RJ" />
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Selecione o estado" />
                 </SelectTrigger>
-                <SelectContent
-                  className="h-60"
-                  side="top"
-                >
+                <SelectContent>
                   <SelectGroup>
                     {brStates.map((states) => (
-                      <SelectItem
-                        key={states}
-                        value={states}
-                      >
+                      <SelectItem key={states} value={states}>
                         {states}
                       </SelectItem>
                     ))}
                   </SelectGroup>
                 </SelectContent>
               </Select>
-
-              <ErrorMessage
-                errors={errors}
-                name="state"
+              <ErrorMessage errors={errors} name="state" />
+            </div>
+            <div className="flex flex-col gap-2">
+              <Label className="text-sm" htmlFor="zipCode">
+                CEP
+              </Label>
+              <Input
+                id="zipCode"
+                placeholder="00000-000"
+                required
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
               />
+              <ErrorMessage errors={errors} name="zipCode" />
             </div>
           </div>
         </div>

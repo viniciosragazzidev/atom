@@ -109,7 +109,7 @@ export function ItemsData({
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-  const [userManager, setUserManager] = useState("");
+  const [userManagerId, setuserManagerId] = useState("");
 
   const [street, setStreet] = useState("");
   const [numberAddress, setNumberAddress] = useState("");
@@ -126,7 +126,7 @@ export function ItemsData({
       name,
       phone,
       email,
-      userManager,
+      userManagerId,
     };
     if (currentStep === 1) {
       const verify = FirstUnitCreateSchema.safeParse(data);
@@ -160,7 +160,7 @@ export function ItemsData({
         name,
         phone,
         email,
-        userManager,
+        userManagerId,
         street,
         numberAddress,
         neighborhoodAddress,
@@ -189,7 +189,7 @@ export function ItemsData({
     setName("");
     setPhone("");
     setEmail("");
-    setUserManager("");
+    setuserManagerId("");
 
     setStreet("");
     setNumberAddress("");
@@ -231,10 +231,7 @@ export function ItemsData({
       </div>
 
       <div className="w-full">
-        <form
-          className="overflow-hidden relative"
-          action=""
-        >
+        <form className="overflow-hidden relative" action="">
           <div
             className={`flex flex-col gap-4 ${
               currentStep === 1
@@ -244,10 +241,7 @@ export function ItemsData({
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="name"
-                >
+                <Label className="text-sm" htmlFor="name">
                   Nome da Unidade
                 </Label>
                 <Input
@@ -257,37 +251,25 @@ export function ItemsData({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="name"
-                />
+                <ErrorMessage errors={errors} name="name" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="userManager"
-                >
+                <Label className="text-sm" htmlFor="userManagerId">
                   Gerente da Unidade
                 </Label>
                 <Input
-                  id="userManager"
+                  id="userManagerId"
                   placeholder="Gerente"
                   required
-                  value={userManager}
-                  onChange={(e) => setUserManager(e.target.value)}
+                  value={userManagerId}
+                  onChange={(e) => setuserManagerId(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="userManager"
-                />
+                <ErrorMessage errors={errors} name="userManagerId" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="phone"
-                >
+                <Label className="text-sm" htmlFor="phone">
                   Telefone
                 </Label>
                 <Input
@@ -296,16 +278,10 @@ export function ItemsData({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="phone"
-                />
+                <ErrorMessage errors={errors} name="phone" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="email"
-                >
+                <Label className="text-sm" htmlFor="email">
                   Email
                 </Label>
                 <Input
@@ -315,10 +291,7 @@ export function ItemsData({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="email"
-                />
+                <ErrorMessage errors={errors} name="email" />
               </div>
             </div>
           </div>
@@ -332,10 +305,7 @@ export function ItemsData({
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="street"
-                >
+                <Label className="text-sm" htmlFor="street">
                   Rua
                 </Label>
                 <Input
@@ -345,16 +315,10 @@ export function ItemsData({
                   value={street}
                   onChange={(e) => setStreet(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="street"
-                />
+                <ErrorMessage errors={errors} name="street" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="numberAddress"
-                >
+                <Label className="text-sm" htmlFor="numberAddress">
                   Número
                 </Label>
                 <Input
@@ -364,18 +328,12 @@ export function ItemsData({
                   value={numberAddress}
                   onChange={(e) => setNumberAddress(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="numberAddress"
-                />
+                <ErrorMessage errors={errors} name="numberAddress" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="neighborhoodAddress"
-                >
+                <Label className="text-sm" htmlFor="neighborhoodAddress">
                   Bairro
                 </Label>
                 <Input
@@ -385,16 +343,10 @@ export function ItemsData({
                   value={neighborhoodAddress}
                   onChange={(e) => setNeighborhoodAddress(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="neighborhoodAddress"
-                />
+                <ErrorMessage errors={errors} name="neighborhoodAddress" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="city"
-                >
+                <Label className="text-sm" htmlFor="city">
                   Cidade
                 </Label>
                 <Input
@@ -404,18 +356,12 @@ export function ItemsData({
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="city"
-                />
+                <ErrorMessage errors={errors} name="city" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="state"
-                >
+                <Label className="text-sm" htmlFor="state">
                   Estado
                 </Label>
                 <Select
@@ -430,26 +376,17 @@ export function ItemsData({
                   <SelectContent>
                     <SelectGroup>
                       {brStates.map((states) => (
-                        <SelectItem
-                          key={states}
-                          value={states}
-                        >
+                        <SelectItem key={states} value={states}>
                           {states}
                         </SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <ErrorMessage
-                  errors={errors}
-                  name="state"
-                />
+                <ErrorMessage errors={errors} name="state" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="zipCode"
-                >
+                <Label className="text-sm" htmlFor="zipCode">
                   CEP
                 </Label>
                 <Input
@@ -459,10 +396,7 @@ export function ItemsData({
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="zipCode"
-                />
+                <ErrorMessage errors={errors} name="zipCode" />
               </div>
             </div>
           </div>

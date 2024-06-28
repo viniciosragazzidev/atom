@@ -15,6 +15,19 @@ import { Label } from "@/components/ui/label";
 import { signIn } from "../../../../auth";
 
 export default async function LoginForm() {
+  const sendData = async (formData: FormData) => {
+    "use server";
+    try {
+      const response = await signIn("credentials", {
+        email: formData.get("email"),
+        password: formData.get("password"),
+        redirect: false,
+      });
+      return response;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  };
   return (
     <Card className="mx-auto w-full max-w-sm">
       <CardHeader>
@@ -25,20 +38,13 @@ export default async function LoginForm() {
       </CardHeader>
       <CardContent>
         <div className="grid gap-4">
-          <form
-            action={async (formData) => {
-              "use server";
-              await signIn("credentials", {
-                redirect: true,
-                redirectTo: "/app",
-              });
-            }}
-          >
+          <form action={sendData}>
             <div className="grid gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
+                name="email"
                 placeholder="m@example.com"
                 required
               />
@@ -53,7 +59,7 @@ export default async function LoginForm() {
                   Esqueceu sua senha?
                 </Link>
               </div>
-              <Input id="password" type="password" required />
+              <Input id="password" type="password" name="password" required />
             </div>
             <Button type="submit" className="w-full ">
               Entrar

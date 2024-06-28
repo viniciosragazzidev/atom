@@ -20,12 +20,12 @@ import { sendProfile } from "./actions/action";
 import { PiSpinner } from "react-icons/pi";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import {
-  FirstUserCompanyCreateSchema,
-  SecondUserCompanyCreateSchema,
+  FirstEmployeeCompanyCreateSchema,
+  SecondEmployeeCompanyCreateSchema,
 } from "./company-user-dialog-schema";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
-interface CreateUserCompanyDialogProps {
+interface CreateEmployeeCompanyDialogProps {
   onOpen: boolean;
   setOnOpen: (value: boolean) => void;
   confirmClose: boolean;
@@ -40,14 +40,14 @@ export type ListUnitWithAccessType = {
   slug: string;
   role: string;
 };
-export function CreateUserCompanyDialog({
+export function CreateEmployeeCompanyDialog({
   onOpen,
   setOnOpen,
   setOnOpenAlert,
   confirmClose,
   setConfirmClose,
   unitsList,
-}: CreateUserCompanyDialogProps) {
+}: CreateEmployeeCompanyDialogProps) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -139,7 +139,7 @@ export function ItemsData({
       accessPassword,
     };
     if (currentStep === 1) {
-      const verify = FirstUserCompanyCreateSchema.safeParse(data);
+      const verify = FirstEmployeeCompanyCreateSchema.safeParse(data);
       if (verify.success) {
         setCurrentStep(2);
         setErrors([]);
@@ -158,7 +158,7 @@ export function ItemsData({
     const data = {
       unitsListWithAccess,
     };
-    const verify = SecondUserCompanyCreateSchema.safeParse(data);
+    const verify = SecondEmployeeCompanyCreateSchema.safeParse(data);
 
     if (verify.success) {
       const items = {
@@ -277,10 +277,7 @@ export function ItemsData({
           </div>
 
           <div className="w-full">
-            <form
-              className="overflow-hidden relative"
-              action=""
-            >
+            <form className="overflow-hidden relative" action="">
               <div
                 className={`flex flex-col gap-4 ${
                   currentStep === 1
@@ -290,10 +287,7 @@ export function ItemsData({
               >
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
-                    <Label
-                      className="text-sm"
-                      htmlFor="name"
-                    >
+                    <Label className="text-sm" htmlFor="name">
                       Nome do Usuário
                     </Label>
                     <Input
@@ -303,16 +297,10 @@ export function ItemsData({
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
-                    <ErrorMessage
-                      errors={errors}
-                      name="name"
-                    />
+                    <ErrorMessage errors={errors} name="name" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label
-                      className="text-sm"
-                      htmlFor="accessPassword"
-                    >
+                    <Label className="text-sm" htmlFor="accessPassword">
                       Senha de Acesso
                     </Label>
                     <Input
@@ -323,18 +311,12 @@ export function ItemsData({
                       value={accessPassword}
                       onChange={(e) => setAccessPassword(e.target.value)}
                     />
-                    <ErrorMessage
-                      errors={errors}
-                      name="accessPassword"
-                    />
+                    <ErrorMessage errors={errors} name="accessPassword" />
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
-                    <Label
-                      className="text-sm"
-                      htmlFor="phone"
-                    >
+                    <Label className="text-sm" htmlFor="phone">
                       Telefone
                     </Label>
                     <Input
@@ -343,16 +325,10 @@ export function ItemsData({
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
-                    <ErrorMessage
-                      errors={errors}
-                      name="phone"
-                    />
+                    <ErrorMessage errors={errors} name="phone" />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <Label
-                      className="text-sm"
-                      htmlFor="email"
-                    >
+                    <Label className="text-sm" htmlFor="email">
                       Email
                     </Label>
                     <Input
@@ -362,10 +338,7 @@ export function ItemsData({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    <ErrorMessage
-                      errors={errors}
-                      name="email"
-                    />
+                    <ErrorMessage errors={errors} name="email" />
                   </div>
                 </div>
               </div>
@@ -378,10 +351,7 @@ export function ItemsData({
                 } transition-all`}
               >
                 <div className="flex flex-col gap-2 relative">
-                  <Label
-                    className="text-sm"
-                    htmlFor="unitsListWithAccess"
-                  >
+                  <Label className="text-sm" htmlFor="unitsListWithAccess">
                     Unidades com Acesso
                   </Label>
 
@@ -433,10 +403,7 @@ export function ItemsData({
                                 .includes(search.toLowerCase())
                             )
                             .map((unit: any, index: number) => (
-                              <tr
-                                className="w-full text-sm"
-                                key={index}
-                              >
+                              <tr className="w-full text-sm" key={index}>
                                 <td>
                                   <input
                                     className="cursor-pointer"
@@ -506,10 +473,7 @@ export function ItemsData({
                       </table>
                     </div>
                   </ScrollArea>
-                  <ErrorMessage
-                    errors={errors}
-                    name="unitsListWithAccess"
-                  />
+                  <ErrorMessage errors={errors} name="unitsListWithAccess" />
                 </div>
               </div>
 

@@ -4,7 +4,7 @@ import React from "react";
 import { SelectUnitAndAccess } from "../select-unit";
 import { BiBell, BiCog } from "react-icons/bi";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import AvatarPopover from "../avatar-popover";
 
 const AppNavbarHeader = ({
   companyAndUnits,
@@ -20,25 +20,28 @@ const AppNavbarHeader = ({
       <header className="w-full h-full flex justify-between items-center">
         {!completeNav && <Logo />}
 
-        <div className="flex items-center w-full justify-end gap-3 n">
+        <div
+          className={`flex items-center w-full ${
+            completeNav ? "justify-between" : "justify-end"
+          }  gap-3`}
+        >
           <span className="hidden sm:block ">
             <SelectUnitAndAccess
               params={params}
               companyAndUnits={companyAndUnits}
             />
           </span>
-          <div className=" block">
-            <Button variant={"ghost"}>
-              <BiCog className="text-lg" />
-            </Button>
-            <Button variant={"ghost"}>
-              <BiBell className="text-lg" />
-            </Button>
+          <div className="flex gap-3">
+            <div className=" block">
+              <Button variant={"ghost"}>
+                <BiCog className="text-lg" />
+              </Button>
+              <Button variant={"ghost"}>
+                <BiBell className="text-lg" />
+              </Button>
+            </div>
+            <AvatarPopover />
           </div>
-          <Avatar className="w-8 h-8 cursor-pointer">
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
         </div>
       </header>
     </div>

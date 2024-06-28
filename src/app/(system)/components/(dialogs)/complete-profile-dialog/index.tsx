@@ -32,6 +32,7 @@ import { assert } from "console";
 import { sendProfile } from "./actions/action";
 import { PiSpinner } from "react-icons/pi";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import { revalidatePath } from "next/cache";
 
 interface CompleteProfileDialogProps {
   onOpen: boolean;
@@ -166,7 +167,7 @@ export function ItemsData({
       const itens = {
         name,
         surname,
-        birthdate,
+        birthdate: new Date(birthdate),
         gender,
         document,
         email,
@@ -177,12 +178,15 @@ export function ItemsData({
       };
 
       setSubmitLoading(true);
-      const result = await sendProfile(itens);
-      if (result) {
+      const send = await sendProfile(itens);
+      const result = JSON.parse(send as string);
+      if (result.message === "success") {
         toast("Dados salvos com sucesso", {});
         resetFields();
         setSubmitLoading(false);
         setOnOpen(false);
+      } else {
+        console.log(result);
       }
     } else {
       const error = verify.error.issues;
@@ -238,10 +242,7 @@ export function ItemsData({
       </div>
 
       <div className="w-full">
-        <form
-          className="overflow-hidden relative"
-          action=""
-        >
+        <form className="overflow-hidden relative" action="">
           <div
             className={`flex flex-col gap-4 ${
               currentStep === 1
@@ -251,10 +252,7 @@ export function ItemsData({
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="name"
-                >
+                <Label className="text-sm" htmlFor="name">
                   Nome
                 </Label>
                 <Input
@@ -264,16 +262,10 @@ export function ItemsData({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="name"
-                />
+                <ErrorMessage errors={errors} name="name" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="surname"
-                >
+                <Label className="text-sm" htmlFor="surname">
                   Sobrenome
                 </Label>
                 <Input
@@ -283,18 +275,12 @@ export function ItemsData({
                   value={surname}
                   onChange={(e) => setSurname(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="surname"
-                />
+                <ErrorMessage errors={errors} name="surname" />
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="birthdate"
-                >
+                <Label className="text-sm" htmlFor="birthdate">
                   Data de Nascimento
                 </Label>
                 <Input
@@ -304,23 +290,13 @@ export function ItemsData({
                   value={birthdate}
                   onChange={(e) => setBirthdate(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="birthdate"
-                />
+                <ErrorMessage errors={errors} name="birthdate" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="gender"
-                >
+                <Label className="text-sm" htmlFor="gender">
                   Gênero
                 </Label>
-                <Select
-                  name="gender"
-                  value={gender}
-                  onValueChange={setGender}
-                >
+                <Select name="gender" value={gender} onValueChange={setGender}>
                   <SelectTrigger className="w-full rounded-xl">
                     <SelectValue placeholder="Selecione..." />
                   </SelectTrigger>
@@ -332,18 +308,12 @@ export function ItemsData({
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-                <ErrorMessage
-                  errors={errors}
-                  name="gender"
-                />
+                <ErrorMessage errors={errors} name="gender" />
               </div>
             </div>
             <div className="grid grid-cols-1 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="document"
-                >
+                <Label className="text-sm" htmlFor="document">
                   CPF
                 </Label>
                 <Input
@@ -354,10 +324,7 @@ export function ItemsData({
                   onChange={(e) => setDocument(e.target.value)}
                 />
 
-                <ErrorMessage
-                  errors={errors}
-                  name="document"
-                />
+                <ErrorMessage errors={errors} name="document" />
               </div>
             </div>
           </div>
@@ -371,10 +338,7 @@ export function ItemsData({
           >
             <div className="grid grid-cols-2 gap-4">
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="email"
-                >
+                <Label className="text-sm" htmlFor="email">
                   Email
                 </Label>
                 <Input
@@ -384,16 +348,10 @@ export function ItemsData({
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="email"
-                />
+                <ErrorMessage errors={errors} name="email" />
               </div>
               <div className="flex flex-col gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="phone"
-                >
+                <Label className="text-sm" htmlFor="phone">
                   Telefone
                 </Label>
                 <Input
@@ -402,18 +360,12 @@ export function ItemsData({
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="phone"
-                />
+                <ErrorMessage errors={errors} name="phone" />
               </div>
             </div>
             <div className="grid grid-cols-6 gap-4">
               <div className="flex flex-col col-span-3 gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="address"
-                >
+                <Label className="text-sm" htmlFor="address">
                   Endereço
                 </Label>
                 <Input
@@ -422,16 +374,10 @@ export function ItemsData({
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="address"
-                />
+                <ErrorMessage errors={errors} name="address" />
               </div>
               <div className="flex flex-col col-span-2 gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="city"
-                >
+                <Label className="text-sm" htmlFor="city">
                   Cidade
                 </Label>
                 <Input
@@ -440,36 +386,20 @@ export function ItemsData({
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
                 />
-                <ErrorMessage
-                  errors={errors}
-                  name="city"
-                />
+                <ErrorMessage errors={errors} name="city" />
               </div>
               <div className="flex flex-col col-span-1 gap-2">
-                <Label
-                  className="text-sm"
-                  htmlFor="state"
-                >
+                <Label className="text-sm" htmlFor="state">
                   Estado
                 </Label>
-                <Select
-                  name="state"
-                  value={state}
-                  onValueChange={setState}
-                >
+                <Select name="state" value={state} onValueChange={setState}>
                   <SelectTrigger className="w-full rounded-xl">
                     <SelectValue placeholder="RJ" />
                   </SelectTrigger>
-                  <SelectContent
-                    className="h-60"
-                    side="top"
-                  >
+                  <SelectContent className="h-60" side="top">
                     <SelectGroup>
                       {brStates.map((states) => (
-                        <SelectItem
-                          key={states}
-                          value={states}
-                        >
+                        <SelectItem key={states} value={states}>
                           {states}
                         </SelectItem>
                       ))}
@@ -477,10 +407,7 @@ export function ItemsData({
                   </SelectContent>
                 </Select>
 
-                <ErrorMessage
-                  errors={errors}
-                  name="state"
-                />
+                <ErrorMessage errors={errors} name="state" />
               </div>
             </div>
           </div>

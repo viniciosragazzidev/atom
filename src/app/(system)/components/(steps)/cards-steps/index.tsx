@@ -6,8 +6,9 @@ import { BiBuilding, BiUser } from "react-icons/bi";
 import { CompleteProfileDialog } from "../../(dialogs)/complete-profile-dialog";
 import { DialogAlertConfirm } from "@/components/dialog-alert-confirm";
 import { IngressCompanyDialog } from "../../(dialogs)/ingress-company-dialog";
+import { ProfileType } from "@/lib/@types";
 
-const CardsStepApp = () => {
+const CardsStepApp = ({ profile }: { profile?: ProfileType }) => {
   const [onOpenModalProfile, setOnOpenModalProfile] = React.useState(false);
   const [onOpenModalCompany, setOnOpenModalCompany] = React.useState(false);
   const [onOpenModalAlert, setOnOpenModalAlert] = React.useState(false);
@@ -40,20 +41,20 @@ const CardsStepApp = () => {
         <CardStepApp
           title="Complete seu perfil"
           buttonText="Completar Perfil"
-          disabled={false}
+          disabled={profile?.id ? true : false}
           buttonIcon={<BiUser />}
           description="Complete seu perfil para ser possivel criar ou ingressar em uma empresa."
-          completed={false}
+          completed={profile?.id ? true : false}
           onOpenModal={onOpenModalProfile}
           setOnOpenModal={setOnOpenModalProfile}
         />
         <CardStepApp
           title="Ingresse em uma empresa"
           buttonText="Escolher método"
-          disabled={true}
+          disabled={profile?.id ? false : true}
           buttonIcon={<BiBuilding />}
           description="Escolha o modo de ingresso. Crie ou una-se a uma já existente."
-          completed={true}
+          completed={false}
           onOpenModal={onOpenModalCompany}
           setOnOpenModal={setOnOpenModalCompany}
         />

@@ -1,8 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-html {
-  font-size: 90%;
+.size-90 {
+  font-size: 90% !important;
 }
 @layer base {
   :root {

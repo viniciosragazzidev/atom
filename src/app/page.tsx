@@ -1,11 +1,16 @@
+"use server";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import Link from "next/link";
-import { BiLogIn, BiUser } from "react-icons/bi";
+import { BiLogIn } from "react-icons/bi";
 import { BsLightning } from "react-icons/bs";
 import ImageTop from "@/images/image.svg";
-export default function Home() {
+import { auth, signIn } from "../../auth";
+import { permanentRedirect } from "next/navigation";
+export default async function Home() {
+  const session = await auth();
+  const user = session?.user;
+
   return (
     <main className="w-full   ">
       <div className="w-full flex justify-center  fixed container">
@@ -24,20 +29,43 @@ export default function Home() {
             </li>
           </ul>
           <div className=" items-center gap-3 text-sm hidden sm:flex">
-            <Link
-              href="/login"
-              className="flex items-center gap-1"
-            >
-              <BiUser /> Acessar Plataforma
-            </Link>
-
-            <Button
-              size={"sm"}
-              variant={"default"}
-              className="bg-blue-500  flex items-center gap-1  h-min px-2 py-1"
-            >
-              <BiLogIn /> Registre-se
-            </Button>
+            {/* <Link href="/login" className="flex items-center gap-1">
+              <BiUser />
+            </Link> */}
+            {user ? (
+              <form
+                action={async () => {
+                  "use server";
+                  permanentRedirect("/app");
+                }}
+              >
+                <Button
+                  size={"sm"}
+                  variant={"default"}
+                  className="bg-blue-500  flex items-center gap-1  h-min px-2 py-1"
+                >
+                  <BiLogIn /> Acessar Plataforma
+                </Button>
+              </form>
+            ) : (
+              <form
+                action={async () => {
+                  "use server";
+                  await signIn("google", {
+                    redirect: true,
+                    redirectTo: "/app",
+                  });
+                }}
+              >
+                <Button
+                  size={"sm"}
+                  variant={"default"}
+                  className="bg-blue-500  flex items-center gap-1  h-min px-2 py-1"
+                >
+                  <BiLogIn /> Acessar Plataforma
+                </Button>
+              </form>
+            )}
           </div>
         </header>
       </div>
@@ -63,12 +91,7 @@ export default function Home() {
             </Button>
           </div>
           <div className="flex w-full justify-end select-none">
-            <Image
-              src={ImageTop}
-              alt="hero image"
-              width={460}
-              height={460}
-            />
+            <Image src={ImageTop} alt="hero image" width={460} height={460} />
           </div>
         </section>
       </div>

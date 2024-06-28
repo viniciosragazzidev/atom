@@ -3,6 +3,7 @@ import { units } from "@/lib/data/company";
 import React from "react";
 
 import AsideMenu from "./components/aside-menu";
+import WrapperApp from "@/components/wrapper";
 
 interface LayoutUnitAreaProps {
   children: React.ReactNode;
@@ -14,13 +15,19 @@ interface LayoutUnitAreaProps {
 
 const LayoutUnitArea = ({ children, params }: LayoutUnitAreaProps) => {
   return (
-    <div className="flex w-full ">
-      <AsideMenu params={params} />
-      <div className="flex w-full flex-col divide-y divide-border/40">
-        <AppNavbarHeader params={params} completeNav companyAndUnits={units} />
-        {children}
+    <WrapperApp params={params}>
+      <div className="flex w-full ">
+        <AsideMenu params={params} />
+        <div className="flex w-full flex-col divide-y divide-border/40">
+          <AppNavbarHeader
+            params={params}
+            completeNav
+            companyAndUnits={units}
+          />
+          {children}
+        </div>
       </div>
-    </div>
+    </WrapperApp>
   );
 };
 

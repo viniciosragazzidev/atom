@@ -8,7 +8,7 @@ import { BiBuilding, BiBuildingHouse } from "react-icons/bi";
 import { BsFilePerson } from "react-icons/bs";
 import { PiPerson } from "react-icons/pi";
 import { CreateUnitDialog } from "../(dialogs)/create-unit-dialog";
-import { CreateUserCompanyDialog } from "../(dialogs)/create-company-user";
+import { CreateEmployeeCompanyDialog } from "../(dialogs)/create-company-user";
 
 const CardsPageBottom = ({ unitList }: any) => {
   const [onOpenModalCreateUnit, setOnOpenModalCreateUnit] =
@@ -26,7 +26,7 @@ const CardsPageBottom = ({ unitList }: any) => {
         setOnOpen={setOnOpenModalCreateUnit}
         setConfirmClose={setConfirmClose}
       />
-      <CreateUserCompanyDialog
+      <CreateEmployeeCompanyDialog
         onOpen={onOpenModalCreateUser}
         confirmClose={confirmClose}
         setOnOpenAlert={setOnOpenModalAlert}
@@ -51,11 +51,7 @@ const CardsPageBottom = ({ unitList }: any) => {
               Gerencie as informaçoes em geral da sua empresa{" "}
             </p>
 
-            <Button
-              variant={"outline"}
-              className="mt-5"
-              size={"sm"}
-            >
+            <Button variant={"outline"} className="mt-5" size={"sm"}>
               {" "}
               Acessar Perfil
             </Button>

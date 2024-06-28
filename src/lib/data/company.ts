@@ -51,7 +51,7 @@ export const units: UnitType[] = Array.from({ length: 10 }).map(() => {
     email: faker.internet.email(),
     phone: faker.phone.number(),
     state: "RJ",
-    userManager: faker.person.fullName(),
+    userManagerId: faker.person.fullName(),
     slug: faker.helpers.slugify(name).toLowerCase(),
     companyId: company[0].id?.toString()!,
     company: company[0],
