@@ -15,64 +15,6 @@ import { ProfileType } from "@/lib/@types";
 const path = process.env.PATHNAME;
 
 const AppHomePage = async () => {
-  // const companyAndUnits: any[] = [
-  //   {
-  //     id: 1,
-  //     name: "Unidade Nova Iguaçu",
-  //     slug: "unidade-nova-iguacu",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Unidade Barra da Tijuca",
-  //     slug: "unidade-barra-da-tijuca",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Unidade Copacabana",
-  //     slug: "unidade-copacabana",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Unidade Botafogo",
-  //     slug: "unidade-botafogo",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Unidade Niterói",
-  //     slug: "unidade-niteroi",
-  //   },
-  //   {
-  //     id: 6,
-  //     name: "Unidade São Gonçalo",
-  //     slug: "unidade-sao-goncalo",
-  //   },
-  //   {
-  //     id: 7,
-  //     name: "Unidade Duque de Caxias",
-  //     slug: "unidade-duque-de-caxias",
-  //   },
-  //   {
-  //     id: 8,
-  //     name: "Unidade Madureira",
-  //     slug: "unidade-madureira",
-  //   },
-  //   {
-  //     id: 9,
-  //     name: "Unidade Tijuca",
-  //     slug: "unidade-tijuca",
-  //   },
-  //   {
-  //     id: 10,
-  //     name: "Unidade Santa Cruz",
-  //     slug: "unidade-santa-cruz",
-  //   },
-  //   {
-  //     id: 11,
-  //     name: "Unidade Recreio",
-  //     slug: "unidade-recreio",
-  //   },
-  // ];
-
   const companyAndUnits: any[] = [];
 
   const session = await auth();
@@ -85,24 +27,22 @@ const AppHomePage = async () => {
   const profileId = user.profileId;
   let profile: ProfileType | undefined;
 
-  console.log(path);
   if (profileId) {
-    profile = await fetch(
-      `${process.env.PATHNAME || "http://localhost:3000/"}${profileId}`,
-      {
+    try {
+      const profileFetch = await fetch(`${path}/api/profile/${profileId}`, {
         method: "GET",
-        next: {
-          revalidate: 1000,
-
-          tags: ["profile", profileId],
+        headers: {
+          "Content-Type": "application/json",
         },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => data.profile);
+      }).then((res) => res.json());
+
+      profile = await profileFetch.profile;
+    } catch (error) {
+      //console.log(error);
+    }
   }
-  console.log();
   const company = profile?.Company;
+  console.log(profile);
 
   return (
     <main className="w-full h-screen overflow-hidden  ">

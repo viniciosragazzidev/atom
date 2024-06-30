@@ -20,7 +20,7 @@ export async function SelectUnitAndAccess({ params = "" }: SelectUnitProps) {
   const data = await getCompanyAndUnits();
   const units = data?.units;
   const company = data?.company;
-  console.log(company);
+  //console.log(company);
 
   const handleSelectUnit = async (data: FormData) => {
     "use server";

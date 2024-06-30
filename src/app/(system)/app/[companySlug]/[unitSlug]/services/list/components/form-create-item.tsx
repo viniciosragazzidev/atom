@@ -198,7 +198,7 @@ const FormCreateItem = ({
       setEmployeeValue(currentItem?.employee);
       setStatus(currentItem?.status);
 
-      console.log("currentItem", currentItem);
+      //console.log("currentItem", currentItem);
     }
   }, [currentItem, setValue]);
 

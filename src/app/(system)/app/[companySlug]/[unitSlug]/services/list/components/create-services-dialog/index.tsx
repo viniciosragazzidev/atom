@@ -61,7 +61,7 @@ export function OrderServiceDialog({
   useEffect(() => {
     window.addEventListener("resize", () => {
       const getIfIsMobile = window.matchMedia("(max-width: 640px)");
-      console.log(getIfIsMobile.matches);
+      //console.log(getIfIsMobile.matches);
 
       setIsMobile(getIfIsMobile.matches);
     });
@@ -268,7 +268,7 @@ export function ItemsData({
       setOsStatus(currentOs.status);
       setZipCode(currentOs.zipCode);
     }
-    console.log(currentOs?.status);
+    //console.log(currentOs?.status);
   }, [currentOs]);
 
   // ================= END MODE VIEW / EDIT =================
