@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { BiBuilding, BiSend } from "react-icons/bi";
 import { permanentRedirect } from "next/navigation";
 import { getCompanyAndUnits } from "./action";
+import { ButtonSubmit } from "../button-form-submit";
 
 interface SelectUnitProps {
   params?: any;
@@ -60,15 +61,15 @@ export async function SelectUnitAndAccess({ params = "" }: SelectUnitProps) {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <Button
+      <ButtonSubmit
+        type="submit"
         disabled={units?.length === 0}
-        className="text-base "
+        className="text-base"
         variant={"default"}
         size={"icon"}
-        type="submit"
       >
         <BiSend />
-      </Button>
+      </ButtonSubmit>
     </form>
   );
 }
