@@ -1,16 +1,24 @@
 "use server";
 import React from "react";
-import AppNavbarHeader from "../components/header";
+
+import { Button } from "@/components/ui/button";
 import { BsLightning } from "react-icons/bs";
+import { PiAtom } from "react-icons/pi";
+
 import { ScrollArea } from "@/components/ui/scroll-area";
-import CardsStepApp from "../components/(steps)/cards-steps";
-import { auth } from "../../../../auth";
+
 import { permanentRedirect } from "next/navigation";
 import { ProfileType } from "@/lib/@types";
+import { auth } from "../../../../../auth";
+import AppNavbarHeader from "../../components/header";
+import CardsPageBottom from "../../components/cards-page-bottom";
+import { FiPhoneCall } from "react-icons/fi";
 import { getProfileByProfileId } from "@/lib/services/requisitions";
-import TopStarsContainer from "./components/top-stars-container";
+import TopStarsContainer from "../components/top-stars-container";
 
 const AppHomePage = async () => {
+  const companyAndUnits: any[] = [];
+
   const session = await auth();
   const user = session?.user;
 
@@ -31,8 +39,8 @@ const AppHomePage = async () => {
   }
   const company = profile?.Company;
 
-  if (company && company.length > 0) {
-    permanentRedirect(`/app/${company[0].slug}`);
+  if (!company || company.length === 0) {
+    permanentRedirect("/app/");
   }
 
   return (
@@ -41,13 +49,15 @@ const AppHomePage = async () => {
 
       <ScrollArea className="w-full h-full max-h-[calc(100vh-80px)] flex items-center ">
         <TopStarsContainer
-          buttonIcon={<BsLightning className="text-lg" />}
-          buttonText="Ver Planos"
-          subtitle="A Atom possui diversos planos pensado totalmente para cada uma das suas nescessidades."
-          title="Conheça todos nossos planos disponíveis"
+          buttonIcon={<FiPhoneCall className="text-lg" />}
+          buttonText="Suporte Atom"
+          subtitle="Nossa equipe sempre estará de prontidão para te ajudar e
+                solicionar qualquer problema que você tiver! Só clicar no botão
+                abaixo."
+          title={`Olá, ${profile?.name}`}
         />
 
-        <CardsStepApp profile={profile} />
+        <CardsPageBottom unitList={companyAndUnits} />
       </ScrollArea>
     </main>
   );
