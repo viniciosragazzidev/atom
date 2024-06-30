@@ -108,12 +108,12 @@ model Company {
 }
 
 model Unit {
-  id                  String          @id @default(cuid())
+  id                  String             @id @default(cuid())
   name                String
   email               String
   phone               String
   userManagerId       String?
-  userManager         Profile?        @relation(fields: [userManagerId], references: [id])
+  userManager         Profile?           @relation(fields: [userManagerId], references: [id])
   street              String
   numberAddress       String
   neighborhoodAddress String
@@ -121,11 +121,12 @@ model Unit {
   state               String
   zipCode             String
   slug                String
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @default(now())
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @default(now())
   employees           UnitEmployees[]
   companyId           String?
-  company             Company?        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  company             Company?           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  UnitOrdersService   UnitOrderService[]
 }
 
 model UnitEmployees {
@@ -146,6 +147,63 @@ model EmployeeProfile {
   company   Company?  @relation(fields: [companyId], references: [id])
 
   UnitEmployees UnitEmployees[]
+}
+
+model UnitOrderService {
+  id          Int     @id @default(autoincrement())
+  description String?
+  status      String  @default("Aberto")
+
+  unitId String?
+  unit   Unit?   @relation(fields: [unitId], references: [id])
+
+  createdAt                DateTime                @default(now())
+  updatedAt                DateTime                @updatedAt
+  amountValue              String
+  UnitOrderServiceClient   UnitOrderServiceClient? @relation(fields: [unitOrderServiceClientId], references: [id])
+  unitOrderServiceClientId Int?
+  UnitOrderServiceItems    UnitOrderServiceItem[]
+}
+
+model UnitOrderServiceItem {
+  id                    Int      @id @default(autoincrement())
+  name                  String
+  brand                 String
+  model                 String
+  numberSerie           String
+  color                 String
+  status                String
+  occurrenceDescription String
+  accessories           String[]
+  images                String[]
+  coustAmountValue      String // Considere mudar para Decimal se for valor monetário
+  amountValue           String // Considere mudar para Decimal se for valor monetário
+  garantyDays           String
+  paymentType           String // Considere usar Enum se houver valores específicos permitidos
+  employeeId            String
+  finallyDescription    String
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  unitOrderServiceId Int?
+  unitOrderService   UnitOrderService? @relation(fields: [unitOrderServiceId], references: [id])
+}
+
+model UnitOrderServiceClient {
+  id                  Int                @id @default(autoincrement())
+  name                String
+  document            String             @unique
+  phone               String
+  email               String?            @unique
+  street              String
+  numberAddress       String
+  neighborhoodAddress String
+  city                String
+  state               String
+  zipCode             String
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  UnitOrderServices   UnitOrderService[]
 }
 
 model VerificationToken {
