@@ -16,23 +16,26 @@ const ListServices = async ({
     [key: string]: string | string[] | undefined;
   };
 }) => {
-  const page = searchParams["page"] || 1;
-  const perPage = searchParams["perPage"] || 5;
+  const page = searchParams["page"] || "1";
+  const perPage = searchParams["perPage"] || "5";
   const search = searchParams["q"] || "";
 
   const start = (Number(page) - 1) * Number(perPage);
   const end = start + Number(perPage);
 
-  const filters = `${search ? `&q=${search}` : ""}${
-    page ? `&page=${page}` : ""
-  }${perPage ? `&perPage=${perPage}` : ""}`;
+  const filters = {
+    search: String(search),
+    page: String(page),
+    perPage: String(perPage),
+  };
   const fetchServices = await getUnitOrdersServices({
     unitSlug: params.unitSlug,
     filters: filters,
   });
-  const services: unitOrderServiceType[] = fetchServices?.orders;
+  const data = fetchServices;
+  const services: unitOrderServiceType[] = data?.orders;
 
-  const entries = services?.slice(start, end);
+  const entries = services;
   return (
     <main>
       <header className="flex flex-col gap-4">
@@ -45,9 +48,9 @@ const ListServices = async ({
             <TableServices entries={entries} />
 
             <TableServicesPagination
-              hasNextPage={end < services?.length}
+              hasNextPage={end < data.total_items}
               hasPreviousPage={start > 0}
-              entries={services}
+              entries={data}
             />
           </section>
         ) : (

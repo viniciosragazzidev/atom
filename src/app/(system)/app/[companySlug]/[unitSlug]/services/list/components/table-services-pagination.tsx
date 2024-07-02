@@ -60,7 +60,7 @@ const TableServicesPagination = ({
         </div>
 
         <span className="text-nowrap">
-          Pagina {page} de {Math.ceil(entries?.length / Number(perPage))}
+          Pagina {entries?.current_page} de {Math.ceil(entries?.total_pages)}
         </span>
 
         <div className="flex items-center gap-2">
@@ -114,7 +114,7 @@ const TableServicesPagination = ({
             onClick={() =>
               router.push(
                 `${path}?page=${Math.ceil(
-                  entries?.length / Number(perPage)
+                  entries?.total_pages
                 )}&perPage=${perPage}${q && q.length > 0 ? `&q=${q}` : q}`
               )
             }

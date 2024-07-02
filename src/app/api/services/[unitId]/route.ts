@@ -7,7 +7,7 @@ export async function GET(
 ) {
   const { unitId } = params;
   const page = parseInt(request.nextUrl.searchParams.get("page") || "1");
-
+  const periodInDays = 30;
   const perPage = parseInt(request.nextUrl.searchParams.get("perPage") || "5");
   const offset = (page - 1) * perPage;
   const search = request.nextUrl.searchParams.get("q") || "";
@@ -41,6 +41,11 @@ export async function GET(
                 },
               },
             },
+            {
+              id: {
+                equals: Number(search),
+              },
+            },
           ],
         },
       },
@@ -55,11 +60,28 @@ export async function GET(
       skip: offset,
       take: perPage,
     });
+    const totalItems = await db.unitOrderService.count({
+      where: {
+        unitId: String(unitId), // Convert unitId to a number
+        createdAt: {
+          gte: new Date(Date.now() - periodInDays * 24 * 60 * 60 * 1000),
+        },
+      },
+    }); // Correção aqui
 
+    console.log(page, "ddd");
     if (orders) {
-      return NextResponse.json({ orders: orders, status: 200 });
+      return NextResponse.json({
+        total_items: totalItems,
+        items_per_page: perPage,
+        current_page: page,
+        total_pages: Math.ceil(totalItems / perPage),
+        orders,
+
+        status: 200,
+      });
     } else {
-      return NextResponse.json({ error: "orders not found", status: 500 });
+      return NextResponse.json({ error: "orders not found", status: 404 });
     }
   } catch (error) {
     return NextResponse.json({

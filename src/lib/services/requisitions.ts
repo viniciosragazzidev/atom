@@ -1,3 +1,4 @@
+"use server";
 import { getCompanyAndUnits } from "@/app/(system)/components/select-unit/action";
 import db from "./db";
 
@@ -55,16 +56,24 @@ export const getUnitOrdersServices = async ({
   filters,
 }: {
   unitSlug: string;
-  filters: string;
+  filters: {
+    search: string;
+    page: string;
+    perPage: string;
+  };
 }) => {
   try {
     const units = (await getCompanyAndUnits()).units;
     const unit = units?.find((unit: any) => unit.slug === unitSlug);
 
+    const search = filters.search;
+    const page = filters.page;
+    const perPage = filters.perPage;
+
     if (unit) {
       const unitId = unit.id!;
       const ordersFetch = await fetch(
-        `${path}/api/services/${unit?.id}?${filters}`,
+        `${path}/api/services/${unitId}?page=${page}&perPage=${perPage}&q=${search}`,
         {
           method: "GET",
           headers: {
@@ -72,7 +81,7 @@ export const getUnitOrdersServices = async ({
           },
           next: {
             revalidate: 1000,
-            tags: ["orders", unitId],
+            tags: ["orders", unitId, page, perPage, search],
           },
         }
       ).then((res) => res.json());
@@ -80,5 +89,36 @@ export const getUnitOrdersServices = async ({
     }
   } catch (error) {
     //console.log(error);
+  }
+};
+
+export const verifyIfEmailClientOsExist = async (email: string) => {
+  console.log(email);
+
+  try {
+    const client = await db.unitOrderServiceClient.findFirst({
+      where: {
+        email: email,
+      },
+    });
+
+    return client;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
+export const verifyIfDocumentClientOsExist = async (document: string) => {
+  try {
+    const client = await db.unitOrderServiceClient.findFirst({
+      where: {
+        document: document,
+      },
+    });
+    return client;
+  } catch (error) {
+    //console.log(error);
+    return null;
   }
 };

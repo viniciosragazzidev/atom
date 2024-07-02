@@ -40,6 +40,11 @@ import { Textarea } from "@/components/ui/textarea";
 import FormCreateItem from "../form-create-item";
 import { UnitOrderServiceItemsType, unitOrderServiceType } from "@/lib/@types";
 import { useParams } from "next/navigation";
+import db from "@/lib/services/db";
+import {
+  verifyIfDocumentClientOsExist,
+  verifyIfEmailClientOsExist,
+} from "@/lib/services/requisitions";
 
 interface OrderServiceDialogProps {
   onOpen: boolean;
@@ -150,7 +155,7 @@ export function ItemsData({
   const [errors, setErrors] = useState<any>();
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const handleNextStep = () => {
+  const handleNextStep = async () => {
     const data = {
       name,
       document,
@@ -167,13 +172,35 @@ export function ItemsData({
     if (currentStep === 1) {
       const verify = ClientServiceSchema.safeParse(data);
       if (verify.success) {
-        setCurrentStep(2);
-        setErrors([]);
+        const verifyIfEmailExist = await verifyIfEmailClientOsExist(email);
+        const resultVerify = document !== verifyIfEmailExist?.document;
+        if (resultVerify) {
+          toast("Email já pertence ao outro cliente", {
+            icon: <CircleAlert className="text-primary text-sm" />,
+          });
+          setErrors([
+            {
+              code: "too_small",
+              minimum: 1,
+              type: "string",
+              inclusive: true,
+              exact: false,
+              message: "Email já pertence ao outro cliente",
+              path: ["email"],
+            },
+          ]);
+        } else {
+          console.log(verifyIfEmailExist);
+
+          setCurrentStep(2);
+          setErrors([]);
+        }
       } else {
         const error = verify.error.issues;
         toast("Faltam dados a serem preenchidos", {
           icon: <CircleAlert className="text-primary text-sm" />,
         });
+        console.log(error);
 
         setErrors(error);
       }
@@ -298,6 +325,36 @@ export function ItemsData({
       setErrors([]);
     };
   }, [confirmClose, onOpen]);
+
+  const verifyIfDocumentClientOsExistFunc = async () => {
+    if (document.length === 11) {
+      const result = await verifyIfDocumentClientOsExist(document);
+      console.log(result);
+
+      if (result) {
+        toast("Esse cliente ja existe no sistema! Importando...", {
+          icon: <CircleAlert className="text-primary text-sm" />,
+        });
+        setName(result.name);
+        setEmail(result.email || "");
+        setPhone(result.phone);
+        setDocument(result.document);
+        setStreet(result.street);
+        setNumberAddress(result.numberAddress);
+        setNeighborhoodAddress(result.neighborhoodAddress);
+        setCity(result.city);
+        setState(result.state);
+        setZipCode(result.zipCode);
+      } else {
+        toast("Esse cliente não existe no sistema!", {
+          icon: <CircleAlert className="text-primary text-sm" />,
+        });
+      }
+    }
+  };
+  useEffect(() => {
+    verifyIfDocumentClientOsExistFunc();
+  }, [document]);
 
   return (
     <>
