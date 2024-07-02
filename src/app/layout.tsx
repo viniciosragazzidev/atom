@@ -17,7 +17,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.className} size-90 relative`}>
+    <html lang="en" className={`${GeistSans.className}  relative`}>
       <body>
         <ThemeProvider
           attribute="class"

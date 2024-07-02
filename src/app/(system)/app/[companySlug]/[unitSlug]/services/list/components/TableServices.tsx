@@ -48,17 +48,17 @@ const TableServices = ({ entries }: { entries: unitOrderServiceType[] }) => {
             <TableCell className="text-nowrap">
               <div className="flex flex-col">
                 <span>
-                  {entry.UnitOrderServiceItems![0].name}{" "}
-                  {entry.UnitOrderServiceItems![0].brand}
+                  {entry.UnitOrderServiceItems![0]?.name || ""}{" "}
+                  {entry.UnitOrderServiceItems![0]?.brand || ""}
                 </span>
-                <span> {entry.UnitOrderServiceItems![0].model} </span>
+                <span> {entry.UnitOrderServiceItems![0]?.model} </span>
               </div>
             </TableCell>
             <TableCell>
               <StatusBadge status={entry.status} />
             </TableCell>
             <TableCell className="text-nowrap">
-              {formateDate(new Date(entry.createdAt))}
+              {entry.createdAt ? formateDate(new Date(entry.createdAt)) : ""}
             </TableCell>
             <TableCell>{entry.amountValue}</TableCell>
             <TableCell>

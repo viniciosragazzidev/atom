@@ -5,6 +5,7 @@ import React from "react";
 import { FiPlus } from "react-icons/fi";
 import { OrderServiceDialog } from "./create-services-dialog";
 import { unitOrderServiceType } from "@/lib/@types";
+import { useParams, usePathname } from "next/navigation";
 
 const AddService = ({
   children,
@@ -17,6 +18,11 @@ const AddService = ({
   const [onOpenModalAlert, setOnOpenModalAlert] = React.useState(false);
   const [onOpenModalCreateService, setOnOpenModalCreateService] =
     React.useState(false);
+
+  const currentPathname = usePathname();
+  const params = useParams();
+  const unitSlug = params.unitSlug as string;
+
   return (
     <>
       <DialogAlertConfirm
@@ -32,6 +38,7 @@ const AddService = ({
         setOnOpen={setOnOpenModalCreateService}
         setConfirmClose={setConfirmClose}
         currentOs={currentOs}
+        unitSlug={unitSlug}
       />
       <Button
         onClick={() => setOnOpenModalCreateService(true)}

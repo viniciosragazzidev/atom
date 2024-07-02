@@ -1,3 +1,6 @@
+import { getCompanyAndUnits } from "@/app/(system)/components/select-unit/action";
+import db from "./db";
+
 const path = process.env.PATHNAME;
 
 export const getProfileByProfileId = async (profileId: string) => {
@@ -20,19 +23,52 @@ export const getProfileByProfileId = async (profileId: string) => {
   }
 };
 
-export const getUnitOrdersServices = async (unitId: string) => {
+export const getCurrentUnit = async ({
+  unitSlug,
+  companySlug,
+}: {
+  unitSlug: string;
+  companySlug: string;
+}) => {
   try {
-    const ordersFetch = await fetch(`${path}/api/services/${unitId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
+    const company = await db.company.findFirst({
+      where: {
+        slug: companySlug,
       },
-      next: {
-        revalidate: 1000,
-        tags: ["orders", unitId],
+    });
+    const unit = await db.unit.findFirst({
+      where: {
+        slug: unitSlug,
+        companyId: company?.id,
       },
-    }).then((res) => res.json());
-    return ordersFetch;
+
+      include: {},
+    });
+
+    return unit;
+  } catch (error) {
+    //console.log(error);
+  }
+};
+export const getUnitOrdersServices = async (unitSlug: string) => {
+  try {
+    const units = (await getCompanyAndUnits()).units;
+    const unit = units?.find((unit: any) => unit.slug === unitSlug);
+
+    if (unit) {
+      const unitId = unit.id!;
+      const ordersFetch = await fetch(`${path}/api/services/${unit?.id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        next: {
+          revalidate: 1000,
+          tags: ["orders", unitId],
+        },
+      }).then((res) => res.json());
+      return ordersFetch;
+    }
   } catch (error) {
     //console.log(error);
   }

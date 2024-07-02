@@ -39,6 +39,7 @@ import StatusBadge from "@/app/(system)/components/status-badge";
 import { Textarea } from "@/components/ui/textarea";
 import FormCreateItem from "../form-create-item";
 import { UnitOrderServiceItemsType, unitOrderServiceType } from "@/lib/@types";
+import { useParams } from "next/navigation";
 
 interface OrderServiceDialogProps {
   onOpen: boolean;
@@ -47,6 +48,7 @@ interface OrderServiceDialogProps {
   setConfirmClose: (value: boolean) => void;
   setOnOpenAlert: (value: boolean) => void;
   currentOs?: unitOrderServiceType;
+  unitSlug?: string;
 }
 export function OrderServiceDialog({
   onOpen,
@@ -55,6 +57,7 @@ export function OrderServiceDialog({
   confirmClose,
   setConfirmClose,
   currentOs,
+  unitSlug,
 }: OrderServiceDialogProps) {
   const [isMobile, setIsMobile] = useState(false);
 
@@ -125,6 +128,9 @@ export function ItemsData({
   setIsMobile: (value: boolean) => void;
   currentOs?: unitOrderServiceType;
 }) {
+  const params = useParams();
+  const companySlug = params.companySlug as string;
+  const unitSlug = params.unitSlug as string;
   const [currentStep, setCurrentStep] = useState(1);
 
   const [name, setName] = useState("");
@@ -201,8 +207,11 @@ export function ItemsData({
         state,
         zipCode,
         description,
+
         status: osStatus,
         items,
+        unitSlug: unitSlug,
+        companySlug: companySlug,
       };
 
       setSubmitLoading(true);

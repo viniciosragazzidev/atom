@@ -42,7 +42,7 @@ const OrderItem = z.object({
   color: z.string().optional(),
   status: z.string().optional(),
   occurrenceDescription: z.string().min(1, "A descrição não pode ser vazio"),
-  acessories: z.array(z.string()).default([]).optional(),
+  accessories: z.array(z.string()).default([]).optional(),
   images: z.array(z.string()).default([]),
   coustAmountValue: z.string().optional(),
   amountValue: z.string().optional(),
@@ -72,9 +72,10 @@ const FormCreateItem = ({
   currentItem?: any;
   setCurrentItem: any;
 }) => {
-  const [acessories, setAccessories] = React.useState<string[]>([]);
+  const [accessories, setAccessories] = React.useState<string[]>([]);
   const [currentAcessorie, setCurrentAcessorie] = React.useState<string>("");
-  const [inputAcessoriesFocus, setInputAcessoriesFocus] = React.useState(false);
+  const [inputAccessoriesFocus, setInputAccessoriesFocus] =
+    React.useState(false);
   const [status, setStatus] = React.useState<string>("PENDING");
   const [garantyDaysValue, setGarantyDaysValue] = React.useState<string>("30");
   const [employeeValue, setEmployeeValue] = React.useState<string>("");
@@ -86,15 +87,15 @@ const FormCreateItem = ({
   }, [openCreateItem]);
 
   const handleCreateItem = () => {
-    if (acessories.includes(currentAcessorie)) {
+    if (accessories.includes(currentAcessorie)) {
       return;
     }
     if (currentAcessorie === "") return;
-    setAccessories([currentAcessorie, ...acessories]);
+    setAccessories([currentAcessorie, ...accessories]);
     setCurrentAcessorie("");
   };
 
-  if (inputAcessoriesFocus) {
+  if (inputAccessoriesFocus) {
     document.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         handleCreateItem();
@@ -119,7 +120,7 @@ const FormCreateItem = ({
     setValue("color", "");
     setValue("status", "");
     setValue("occurrenceDescription", "");
-    setValue("acessories", []);
+    setValue("accessories", []);
     setValue("images", []);
     setValue("coustAmountValue", "");
     setValue("amountValue", "");
@@ -136,11 +137,12 @@ const FormCreateItem = ({
     setStatus("PENDING");
   };
   const onSubmit = (data: any) => {
+    const id = data.id ? data.id : undefined;
     const item = {
       ...data,
-      id: data.id || Math.random().toString(36).slice(2),
+      id,
       status: status,
-      acessories: acessories,
+      accessories: accessories,
       garantyDays: garantyDaysValue,
       paymentType: paymentTypeValue,
       employeeId: employeeValue,
@@ -183,7 +185,7 @@ const FormCreateItem = ({
       setValue("color", currentItem?.color);
       setValue("status", currentItem?.status);
       setValue("occurrenceDescription", currentItem?.occurrenceDescription);
-      setValue("acessories", currentItem?.acessories);
+      setValue("accessories", currentItem?.accessories);
       setValue("images", currentItem.images);
       setValue("coustAmountValue", currentItem?.coustAmountValue);
       setValue("amountValue", currentItem?.amountValue);
@@ -192,7 +194,7 @@ const FormCreateItem = ({
       setValue("employeeId", currentItem?.employeeId);
       setValue("finallyDescription", currentItem?.finallyDescription);
 
-      setAccessories(currentItem?.acessories);
+      setAccessories(currentItem?.accessories);
       setGarantyDaysValue(currentItem?.garantyDays);
       setPaymentTypeValue(currentItem?.paymentType);
       setEmployeeValue(currentItem?.employee);
@@ -365,7 +367,7 @@ const FormCreateItem = ({
               </div>
               <div className="flex flex-col w-full gap-4">
                 <Label
-                  htmlFor="acessories"
+                  htmlFor="accessories"
                   className="text-left flex items-center gap-1 text-primary"
                 >
                   Acessórios
@@ -373,13 +375,13 @@ const FormCreateItem = ({
 
                 <div className="flex gap-1">
                   <Input
-                    id="acessories"
+                    id="accessories"
                     value={currentAcessorie}
                     onFocus={() => {
-                      setInputAcessoriesFocus(true);
+                      setInputAccessoriesFocus(true);
                     }}
                     onBlur={() => {
-                      setInputAcessoriesFocus(false);
+                      setInputAccessoriesFocus(false);
                     }}
                     onChange={(e) => {
                       setCurrentAcessorie(e.target.value);
@@ -395,10 +397,10 @@ const FormCreateItem = ({
                     <BiPlus />
                   </Button>
                 </div>
-                {acessories && acessories.length > 0 ? (
+                {accessories && accessories.length > 0 ? (
                   <ScrollArea className="flex w-full h-20 gap-1">
                     <div className="flex flex-col gap-1">
-                      {acessories.map((acessory: any) => (
+                      {accessories.map((acessory: any) => (
                         <span
                           className="text-sm group text-muted-foreground px-3 w-full flex items-center justify-between cursor-pointer hover:text-primary hover:bg-accent py-2 rounded-lg"
                           key={acessory}
@@ -408,7 +410,7 @@ const FormCreateItem = ({
                             className="text-accent-foreground hover:text-red-500 text-lg hidden group-hover:block"
                             onClick={() => {
                               setAccessories(
-                                acessories.filter(
+                                accessories.filter(
                                   (item: any) => item !== acessory
                                 )
                               );
@@ -625,7 +627,7 @@ const FormCreateItem = ({
                 </SheetClose>
                 <Button
                   size={"sm"}
-                  type={inputAcessoriesFocus ? "button" : "submit"}
+                  type={inputAccessoriesFocus ? "button" : "submit"}
                 >
                   {currentItem ? "Atualizar item" : "Adicionar item "}
                 </Button>

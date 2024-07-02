@@ -71,20 +71,20 @@ type UnitCompanyEmployeesType = {
 };
 
 export interface unitOrderServiceType {
-  id: number;
+  id?: number;
   description: string;
   status: string;
-  unitid: string;
-  createdAt: string;
-  updatedAt: string;
-  amountValue: string;
-  unitOrderServiceClientId: number;
+  unitid?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  amountValue?: string;
+  unitOrderServiceClientId?: number;
   UnitOrderServiceClient?: UnitOrderServiceClientType;
   UnitOrderServiceItems?: UnitOrderServiceItemsType[];
 }
 
 export type UnitOrderServiceClientType = {
-  id: number;
+  id?: number;
   name: string;
   document: string;
   phone: string;
@@ -95,8 +95,8 @@ export type UnitOrderServiceClientType = {
   city: string;
   state: string;
   zipCode: string;
-  createdAt: string;
-  updatedAt: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type UnitOrderServiceItemsType = {

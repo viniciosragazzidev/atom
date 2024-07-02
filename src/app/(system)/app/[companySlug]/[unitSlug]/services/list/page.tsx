@@ -1,11 +1,10 @@
 "use server";
-import React from "react";
+import React, { Suspense } from "react";
 
 import TableServices from "./components/TableServices";
 import TableServicesPagination from "./components/table-services-pagination";
 import TableServicesFilter from "./components/table-services-filter";
 import { unitOrderServiceType } from "@/lib/@types";
-import { getCompanyAndUnits } from "@/app/(system)/components/select-unit/action";
 import { getUnitOrdersServices } from "@/lib/services/requisitions";
 
 const ListServices = async ({
@@ -17,11 +16,9 @@ const ListServices = async ({
     [key: string]: string | string[] | undefined;
   };
 }) => {
-  const units = (await getCompanyAndUnits()).units;
-  const unit = units?.find((unit: any) => unit.slug === params.unitSlug);
-
-  const fetchServices = await getUnitOrdersServices(unit?.id || "");
+  const fetchServices = await getUnitOrdersServices(params.unitSlug);
   const services: unitOrderServiceType[] = fetchServices?.orders;
+  console.log(fetchServices);
 
   const page = searchParams["page"] || 1;
   const perPage = searchParams["perPage"] || 5;
@@ -41,22 +38,23 @@ const ListServices = async ({
         <h1 className="text-2xl font-bold">Serviços</h1>
         <TableServicesFilter />
       </header>
+      <Suspense fallback={<div>Loading...</div>}>
+        {entries?.length > 0 ? (
+          <section className="flex flex-col gap-2 w-full   h-full px-2">
+            <TableServices entries={entries} />
 
-      {entries?.length > 0 ? (
-        <section className="flex flex-col gap-2 w-full   h-full px-2">
-          <TableServices entries={entries} />
-
-          <TableServicesPagination
-            hasNextPage={end < services?.length}
-            hasPreviousPage={start > 0}
-            entries={services}
-          />
-        </section>
-      ) : (
-        <div className="w-full flex justify-center items-center min-h-96">
-          <p className="text-center">Nenhum item encontrado</p>
-        </div>
-      )}
+            <TableServicesPagination
+              hasNextPage={end < services?.length}
+              hasPreviousPage={start > 0}
+              entries={services}
+            />
+          </section>
+        ) : (
+          <div className="w-full flex justify-center items-center min-h-96">
+            <p className="text-center">Nenhum item encontrado</p>
+          </div>
+        )}
+      </Suspense>
     </main>
   );
 };

@@ -10,10 +10,12 @@ const WrapperApp = ({
   params: any;
 }) => {
   useEffect(() => {
+    console.log(params);
+
     const html = document.querySelector("html");
-    if (!params.unitSlug) {
+    if (params.unitSlug) {
       if (html) {
-        html.classList.remove("size-90");
+        html.classList.add("size-90");
       }
     } else {
       if (html) {

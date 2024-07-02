@@ -165,7 +165,7 @@ model UnitOrderService {
 }
 
 model UnitOrderServiceItem {
-  id                    Int      @id @default(autoincrement())
+  id                    String   @id @default(cuid())
   name                  String
   brand                 String
   model                 String
