@@ -70,13 +70,36 @@ type UnitCompanyEmployeesType = {
   companyEmployee?: UserType;
 };
 
-export interface OSType extends ServicesDialogSchema {
-  createdAt: Date;
-  updatedAt: Date;
-  items: ItemsOsType[];
+export interface unitOrderServiceType {
+  id: number;
+  description: string;
+  status: string;
+  unitid: string;
+  createdAt: string;
+  updatedAt: string;
   amountValue: string;
+  unitOrderServiceClientId: number;
+  UnitOrderServiceClient?: UnitOrderServiceClientType;
+  UnitOrderServiceItems?: UnitOrderServiceItemsType[];
 }
-export type ItemsOsType = {
+
+export type UnitOrderServiceClientType = {
+  id: number;
+  name: string;
+  document: string;
+  phone: string;
+  email: string;
+  street: string;
+  numberAddress: string;
+  neighborhoodAddress: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type UnitOrderServiceItemsType = {
   id: number;
   name: string;
   brand: string;
@@ -85,12 +108,15 @@ export type ItemsOsType = {
   color: string;
   status: string;
   occurrenceDescription: string;
-  accessories: string[]; // Assuming accessories are represented as an array of strings
-  images: string[]; // Assuming images are represented as an array of strings (URLs or paths)
-  coustAmountValue: string; // Should this be number instead of string?
-  amountValue: string; // Should this be number instead of string?
-  garantyDays: string; // Assuming this represents the number of days as a string
-  paymentType: string; // Could be an enum if there are specific allowed values
+  accessories: string[];
+  images: string[];
+  coustAmountValue: string;
+  amountValue: string;
+  garantyDays: string;
+  paymentType: string;
   employeeId: string;
   finallyDescription: string;
+  createdAt: string;
+  updatedAt: string;
+  unitOrderServiceId: number;
 };

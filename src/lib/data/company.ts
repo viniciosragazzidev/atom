@@ -1,5 +1,5 @@
 // import { faker } from "@faker-js/faker/locale/pt_BR";
-// import { CompanyType, OSType, UnitType } from "../@types";
+// import { CompanyType, unitOrderServiceType, UnitType } from "../@types";
 
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -64,7 +64,7 @@ export const formateDate = (date: Date) => {
 //   style: "currency",
 //   currency: "BRL",
 // });
-// export const services: OSType[] = Array.from({ length: 10 }).map((_, index) => {
+// export const services: unitOrderServiceType[] = Array.from({ length: 10 }).map((_, index) => {
 //   return {
 //     id: index + 1,
 //     name: faker.person.fullName(),

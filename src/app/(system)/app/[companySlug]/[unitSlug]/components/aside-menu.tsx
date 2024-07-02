@@ -4,11 +4,7 @@ import Logo from "@/components/logo";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import {
-  BsChevronDoubleLeft,
-  BsChevronDoubleRight,
-  BsWallet,
-} from "react-icons/bs";
+import { BsChevronDoubleRight } from "react-icons/bs";
 import SDark from "@/images/s_dark.png";
 import SLight from "@/images/s_light.png";
 import {

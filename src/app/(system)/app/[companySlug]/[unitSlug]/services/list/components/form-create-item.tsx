@@ -31,7 +31,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import React, { useCallback, useEffect } from "react";
-import { ItemsOsType } from "@/lib/@types";
+import { UnitOrderServiceItemsType } from "@/lib/@types";
 
 const OrderItem = z.object({
   id: z.string().cuid().optional(),
@@ -66,7 +66,7 @@ const FormCreateItem = ({
   setCurrentItem,
 }: {
   setItems: React.Dispatch<React.SetStateAction<any>>;
-  items: ItemsOsType[];
+  items: UnitOrderServiceItemsType[];
   setOpenCreateItem: React.Dispatch<React.SetStateAction<boolean>>;
   openCreateItem: boolean;
   currentItem?: any;

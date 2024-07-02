@@ -13,7 +13,6 @@ const NavbarTop = ({ items }: any) => {
     } else {
       return splittedPath[4];
     }
-    return "";
   };
   return (
     <ul className="flex items-center gap-3">

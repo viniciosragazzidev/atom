@@ -38,7 +38,7 @@ import {
 import StatusBadge from "@/app/(system)/components/status-badge";
 import { Textarea } from "@/components/ui/textarea";
 import FormCreateItem from "../form-create-item";
-import { ItemsOsType, OSType } from "@/lib/@types";
+import { UnitOrderServiceItemsType, unitOrderServiceType } from "@/lib/@types";
 
 interface OrderServiceDialogProps {
   onOpen: boolean;
@@ -46,7 +46,7 @@ interface OrderServiceDialogProps {
   confirmClose: boolean;
   setConfirmClose: (value: boolean) => void;
   setOnOpenAlert: (value: boolean) => void;
-  currentOs?: OSType;
+  currentOs?: unitOrderServiceType;
 }
 export function OrderServiceDialog({
   onOpen,
@@ -123,7 +123,7 @@ export function ItemsData({
   setConfirmClose: (value: boolean) => void;
   setOnOpenAlert: (value: boolean) => void;
   setIsMobile: (value: boolean) => void;
-  currentOs?: OSType;
+  currentOs?: unitOrderServiceType;
 }) {
   const [currentStep, setCurrentStep] = useState(1);
 
@@ -177,7 +177,7 @@ export function ItemsData({
   // ------------ Items Area --------------------
 
   const [openCreateItem, setOpenCreateItem] = useState(false);
-  const [items, setItems] = useState<ItemsOsType[]>([]);
+  const [items, setItems] = useState<UnitOrderServiceItemsType[]>([]);
   const [currentItem, setCurrentItem] = useState<any>();
   // ==============END ITEMS AREA ===============
 
@@ -597,29 +597,31 @@ export function ItemsData({
                         </TableRow>
                       </TableHeader>
                       <TableBody>
-                        {items.map((item: ItemsOsType, index: number) => (
-                          <TableRow key={index}>
-                            <TableCell>{item.name}</TableCell>
-                            <TableCell>{item.brand}</TableCell>
-                            <TableCell>{item.model}</TableCell>
-                            <TableCell>
-                              <StatusBadge status={item.status} />
-                            </TableCell>
-                            <TableCell>
-                              <Button
-                                variant="outline"
-                                type="button"
-                                onClick={() => {
-                                  setCurrentItem(item);
-                                  setOpenCreateItem(true);
-                                }}
-                                size={"sm"}
-                              >
-                                <FiEye className="cursor-pointer hover:text-primary hover:scale-95 transition-all" />
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        ))}
+                        {items.map(
+                          (item: UnitOrderServiceItemsType, index: number) => (
+                            <TableRow key={index}>
+                              <TableCell>{item.name}</TableCell>
+                              <TableCell>{item.brand}</TableCell>
+                              <TableCell>{item.model}</TableCell>
+                              <TableCell>
+                                <StatusBadge status={item.status} />
+                              </TableCell>
+                              <TableCell>
+                                <Button
+                                  variant="outline"
+                                  type="button"
+                                  onClick={() => {
+                                    setCurrentItem(item);
+                                    setOpenCreateItem(true);
+                                  }}
+                                  size={"sm"}
+                                >
+                                  <FiEye className="cursor-pointer hover:text-primary hover:scale-95 transition-all" />
+                                </Button>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        )}
                       </TableBody>
                     </Table>
                   </>

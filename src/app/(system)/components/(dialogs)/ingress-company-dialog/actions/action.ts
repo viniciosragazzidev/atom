@@ -10,7 +10,7 @@ export const sendCompany = async (data: CompanyType) => {
     const session = await auth();
     const user = session?.user;
     const profileId = user?.profileId;
-    const companySlug = data.name.toLocaleLowerCase().replace(" ", "-");
+    const companySlug = data.name.toLowerCase().replace(" ", "-");
 
     const createCompany = await db.company.create({
       data: {
@@ -26,7 +26,7 @@ export const sendCompany = async (data: CompanyType) => {
         areasOfActivity: String(data.areasOfActivity) || "",
         state: String(data.state) || "",
         fundationDate: String(data.fundationDate) || "",
-        slug: String(data.slug) || companySlug,
+        slug: companySlug,
         inscEstadual: String(data.inscEstadual) || "",
         inscMunicipal: String(data.inscMunicipal) || "",
         owner: {

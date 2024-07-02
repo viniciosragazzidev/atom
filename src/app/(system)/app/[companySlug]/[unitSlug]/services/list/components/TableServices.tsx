@@ -10,10 +10,10 @@ import {
 import React from "react";
 import { FiEdit } from "react-icons/fi";
 import AddService from "./add-service";
-import { OSType } from "@/lib/@types";
+import { unitOrderServiceType } from "@/lib/@types";
 import { formateDate } from "@/lib/data/company";
 
-const TableServices = ({ entries }: { entries: OSType[] }) => {
+const TableServices = ({ entries }: { entries: unitOrderServiceType[] }) => {
   const tableHeaders = [
     "ID",
     "Cliente",
@@ -34,28 +34,31 @@ const TableServices = ({ entries }: { entries: OSType[] }) => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {entries.map((entry: OSType, index: number) => (
+        {entries?.map((entry: unitOrderServiceType, index: number) => (
           <TableRow key={index}>
             <TableCell>{entry.id}</TableCell>
             <TableCell>
               <div className="flex flex-col text-nowrap">
-                <span className="font-bold">{entry.name}</span>
-                <span>{entry.phone}</span>
+                <span className="font-bold">
+                  {entry.UnitOrderServiceClient?.name || ""}
+                </span>
+                <span> {entry.UnitOrderServiceClient?.phone}</span>
               </div>
             </TableCell>
             <TableCell className="text-nowrap">
               <div className="flex flex-col">
                 <span>
-                  {entry.items[0].name} {entry.items[0].brand}
+                  {entry.UnitOrderServiceItems![0].name}{" "}
+                  {entry.UnitOrderServiceItems![0].brand}
                 </span>
-                <span>{entry.items[0].model}</span>
+                <span> {entry.UnitOrderServiceItems![0].model} </span>
               </div>
             </TableCell>
             <TableCell>
               <StatusBadge status={entry.status} />
             </TableCell>
             <TableCell className="text-nowrap">
-              {formateDate(entry.createdAt)}
+              {formateDate(new Date(entry.createdAt))}
             </TableCell>
             <TableCell>{entry.amountValue}</TableCell>
             <TableCell>

@@ -4,14 +4,14 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { FiPlus } from "react-icons/fi";
 import { OrderServiceDialog } from "./create-services-dialog";
-import { OSType } from "@/lib/@types";
+import { unitOrderServiceType } from "@/lib/@types";
 
 const AddService = ({
   children,
   currentOs,
 }: {
   children: React.ReactNode;
-  currentOs?: OSType;
+  currentOs?: unitOrderServiceType;
 }) => {
   const [confirmClose, setConfirmClose] = React.useState(false);
   const [onOpenModalAlert, setOnOpenModalAlert] = React.useState(false);
