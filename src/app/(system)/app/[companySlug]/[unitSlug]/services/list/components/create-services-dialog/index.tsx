@@ -255,18 +255,20 @@ export function ItemsData({
     if (currentOs) {
       setOsStatus(currentOs.status);
       setDescription(currentOs.description);
-      setItems(currentOs.items);
-      setName(currentOs.name);
-      setDocument(currentOs.document);
-      setPhone(currentOs.phone);
-      setEmail(currentOs.email);
-      setStreet(currentOs.street);
-      setNumberAddress(currentOs.numberAddress);
-      setNeighborhoodAddress(currentOs.neighborhoodAddress);
-      setCity(currentOs.city);
-      setState(currentOs.state);
+      setItems(currentOs.UnitOrderServiceItems || []);
+      setName(currentOs.UnitOrderServiceClient?.name || "");
+      setDocument(currentOs.UnitOrderServiceClient?.document || "");
+      setPhone(currentOs.UnitOrderServiceClient?.phone || "");
+      setEmail(currentOs.UnitOrderServiceClient?.email || "");
+      setStreet(currentOs.UnitOrderServiceClient?.street || "");
+      setNumberAddress(currentOs.UnitOrderServiceClient?.numberAddress || "");
+      setNeighborhoodAddress(
+        currentOs.UnitOrderServiceClient?.neighborhoodAddress || ""
+      );
+      setCity(currentOs.UnitOrderServiceClient?.city || "");
+      setState(currentOs.UnitOrderServiceClient?.state || "RJ");
       setOsStatus(currentOs.status);
-      setZipCode(currentOs.zipCode);
+      setZipCode(currentOs.UnitOrderServiceClient?.zipCode || "");
     }
     //console.log(currentOs?.status);
   }, [currentOs]);

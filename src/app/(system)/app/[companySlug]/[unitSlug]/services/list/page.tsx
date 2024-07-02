@@ -42,7 +42,7 @@ const ListServices = async ({
         <TableServicesFilter />
       </header>
 
-      {entries.length > 0 ? (
+      {entries?.length > 0 ? (
         <section className="flex flex-col gap-2 w-full   h-full px-2">
           <TableServices entries={entries} />
 
