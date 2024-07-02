@@ -16,22 +16,23 @@ const ListServices = async ({
     [key: string]: string | string[] | undefined;
   };
 }) => {
-  const fetchServices = await getUnitOrdersServices(params.unitSlug);
-  const services: unitOrderServiceType[] = fetchServices?.orders;
-  console.log(fetchServices);
-
   const page = searchParams["page"] || 1;
   const perPage = searchParams["perPage"] || 5;
   const search = searchParams["q"] || "";
 
   const start = (Number(page) - 1) * Number(perPage);
   const end = start + Number(perPage);
-  const bySearch = services?.filter(
-    (service: unitOrderServiceType) =>
-      service.UnitOrderServiceClient?.name &&
-      service.UnitOrderServiceClient.name.includes(String(search).toLowerCase())
-  );
-  const entries = bySearch?.slice(start, end);
+
+  const filters = `${search ? `&q=${search}` : ""}${
+    page ? `&page=${page}` : ""
+  }${perPage ? `&perPage=${perPage}` : ""}`;
+  const fetchServices = await getUnitOrdersServices({
+    unitSlug: params.unitSlug,
+    filters: filters,
+  });
+  const services: unitOrderServiceType[] = fetchServices?.orders;
+
+  const entries = services?.slice(start, end);
   return (
     <main>
       <header className="flex flex-col gap-4">

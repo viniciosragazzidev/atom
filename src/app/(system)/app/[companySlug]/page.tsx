@@ -1,10 +1,6 @@
 "use server";
 import React from "react";
 
-import { Button } from "@/components/ui/button";
-import { BsLightning } from "react-icons/bs";
-import { PiAtom } from "react-icons/pi";
-
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { permanentRedirect } from "next/navigation";

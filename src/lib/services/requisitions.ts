@@ -50,23 +50,32 @@ export const getCurrentUnit = async ({
     //console.log(error);
   }
 };
-export const getUnitOrdersServices = async (unitSlug: string) => {
+export const getUnitOrdersServices = async ({
+  unitSlug,
+  filters,
+}: {
+  unitSlug: string;
+  filters: string;
+}) => {
   try {
     const units = (await getCompanyAndUnits()).units;
     const unit = units?.find((unit: any) => unit.slug === unitSlug);
 
     if (unit) {
       const unitId = unit.id!;
-      const ordersFetch = await fetch(`${path}/api/services/${unit?.id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        next: {
-          revalidate: 1000,
-          tags: ["orders", unitId],
-        },
-      }).then((res) => res.json());
+      const ordersFetch = await fetch(
+        `${path}/api/services/${unit?.id}?${filters}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          next: {
+            revalidate: 1000,
+            tags: ["orders", unitId],
+          },
+        }
+      ).then((res) => res.json());
       return ordersFetch;
     }
   } catch (error) {
