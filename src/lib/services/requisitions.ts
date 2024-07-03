@@ -93,16 +93,13 @@ export const getUnitOrdersServices = async ({
 };
 
 export const verifyIfEmailClientOsExist = async (email: string) => {
-  console.log(email);
-
   try {
     const client = await db.unitOrderServiceClient.findFirst({
       where: {
         email: email,
       },
     });
-
-    return client;
+    if (client !== null) return client;
   } catch (error) {
     console.log(error);
     return null;

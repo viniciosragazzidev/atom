@@ -12,6 +12,8 @@ export async function GET(
   const offset = (page - 1) * perPage;
   const search = request.nextUrl.searchParams.get("q") || "";
   try {
+    console.log(search);
+
     const orders = await db.unitOrderService.findMany({
       where: {
         unitId: String(unitId), // Convert unitId to a number
@@ -34,7 +36,7 @@ export async function GET(
             },
             {
               UnitOrderServiceItems: {
-                every: {
+                some: {
                   name: {
                     contains: search,
                   },

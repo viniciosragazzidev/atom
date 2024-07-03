@@ -174,7 +174,8 @@ export function ItemsData({
       if (verify.success) {
         const verifyIfEmailExist = await verifyIfEmailClientOsExist(email);
         const resultVerify = document !== verifyIfEmailExist?.document;
-        if (resultVerify) {
+        if (verifyIfEmailExist && resultVerify) {
+          console.log(verifyIfEmailExist);
           toast("Email já pertence ao outro cliente", {
             icon: <CircleAlert className="text-primary text-sm" />,
           });
