@@ -36,7 +36,7 @@ export function IngressCompanyDialog({
   useEffect(() => {
     window.addEventListener("resize", () => {
       const getIfIsMobile = window.matchMedia("(max-width: 640px)");
-      //console.log(getIfIsMobile.matches);
+      ////console.log(getIfIsMobile.matches);
 
       setIsMobile(getIfIsMobile.matches);
     });

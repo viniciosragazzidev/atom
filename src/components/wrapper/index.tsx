@@ -10,7 +10,7 @@ const WrapperApp = ({
   params: any;
 }) => {
   useEffect(() => {
-    console.log(params);
+    //console.log(params);
 
     const html = document.querySelector("html");
     if (params.unitSlug) {

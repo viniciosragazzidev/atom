@@ -12,7 +12,7 @@ import { revalidatePath, revalidateTag } from "next/cache";
 export const sendOrder = async (data: any) => {
   const unitSlug = data.unitSlug;
   const companySlug = data.companySlug;
-  console.log(data);
+  //console.log(data);
 
   const currentUnit = await getCurrentUnit({
     companySlug: companySlug,
@@ -38,13 +38,16 @@ export const sendOrder = async (data: any) => {
   };
 
   const items: UnitOrderServiceItemsType[] = data.items;
-
+  const totalItemsAmountValue = items.reduce(
+    (acc: number, item: any) => acc + Number(item.amountValue),
+    0
+  );
   try {
     const createOrder = await db.unitOrderService.create({
       data: {
         // id: data.id || 1,
         description: order.description,
-        amountValue: order.amountValue || "",
+        amountValue: String(totalItemsAmountValue),
         status: order.status,
 
         unit: {
@@ -103,7 +106,7 @@ export const sendOrder = async (data: any) => {
       orderId: createOrder.id,
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return [];
   }
 };
@@ -112,7 +115,7 @@ export const updateOrder = async (data: any) => {
   // update
   const unitSlug = data.unitSlug;
   const companySlug = data.companySlug;
-  console.log(data);
+  //console.log(data);
 
   const currentUnit = await getCurrentUnit({
     companySlug: companySlug,
@@ -140,6 +143,10 @@ export const updateOrder = async (data: any) => {
   };
 
   const items: UnitOrderServiceItemsType[] = data.items;
+  const totalItemsAmountValue = items.reduce(
+    (acc: number, item: any) => acc + Number(item.amountValue),
+    0
+  );
 
   try {
     const updateOrder = await db.unitOrderService.update({
@@ -148,7 +155,7 @@ export const updateOrder = async (data: any) => {
       },
       data: {
         description: order.description,
-        amountValue: order.amountValue || "",
+        amountValue: String(totalItemsAmountValue),
         status: order.status,
       },
     });
@@ -176,7 +183,7 @@ export const updateOrder = async (data: any) => {
         unitOrderServiceId: order.id,
       },
     });
-    console.log(items);
+    //console.log(items);
 
     const createItems = await db.unitOrderServiceItem.createMany({
       data: items.map((item: any) => ({
@@ -192,7 +199,7 @@ export const updateOrder = async (data: any) => {
       orderId: updateOrder.id,
     });
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return [];
   }
 };

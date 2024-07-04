@@ -27,7 +27,7 @@ const AppHomePage = async () => {
       const profileFetch = await getProfileByProfileId(profileId);
       profile = await profileFetch.profile;
     } catch (error) {
-      //console.log(error);
+      ////console.log(error);
     }
   }
   const company = profile?.Company;

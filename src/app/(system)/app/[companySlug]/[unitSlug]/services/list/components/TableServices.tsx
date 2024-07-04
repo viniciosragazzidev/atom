@@ -11,7 +11,7 @@ import React from "react";
 import { FiEdit } from "react-icons/fi";
 import AddService from "./add-service";
 import { unitOrderServiceType } from "@/lib/@types";
-import { formateDate } from "@/lib/data/company";
+import { brl, formateDate } from "@/lib/data/company";
 
 const TableServices = ({ entries }: { entries: unitOrderServiceType[] }) => {
   const tableHeaders = [
@@ -60,7 +60,9 @@ const TableServices = ({ entries }: { entries: unitOrderServiceType[] }) => {
             <TableCell className="text-nowrap">
               {entry.createdAt ? formateDate(new Date(entry.createdAt)) : ""}
             </TableCell>
-            <TableCell>{entry.amountValue}</TableCell>
+            <TableCell>
+              {brl.format(Number(entry.amountValue)) || brl.format(0)}
+            </TableCell>
             <TableCell>
               {" "}
               <AddService currentOs={entry}>

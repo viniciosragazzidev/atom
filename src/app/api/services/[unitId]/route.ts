@@ -12,7 +12,7 @@ export async function GET(
   const offset = (page - 1) * perPage;
   const search = request.nextUrl.searchParams.get("q") || "";
   try {
-    console.log(search);
+    //console.log(search);
 
     const orders = await db.unitOrderService.findMany({
       where: {
@@ -71,7 +71,7 @@ export async function GET(
       },
     }); // Correção aqui
 
-    console.log(page, "ddd");
+    //console.log(page, "ddd");
     if (orders) {
       return NextResponse.json({
         total_items: totalItems,

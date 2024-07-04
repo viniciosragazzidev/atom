@@ -60,10 +60,10 @@ export const formateDate = (date: Date) => {
 //   };
 // });
 
-// const brl = new Intl.NumberFormat("pt-BR", {
-//   style: "currency",
-//   currency: "BRL",
-// });
+export const brl = new Intl.NumberFormat("pt-BR", {
+  style: "currency",
+  currency: "BRL",
+});
 // export const services: unitOrderServiceType[] = Array.from({ length: 10 }).map((_, index) => {
 //   return {
 //     id: index + 1,

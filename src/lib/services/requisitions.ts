@@ -20,7 +20,7 @@ export const getProfileByProfileId = async (profileId: string) => {
 
     return profileFetch;
   } catch (error) {
-    //console.log(error);
+    ////console.log(error);
   }
 };
 
@@ -48,7 +48,7 @@ export const getCurrentUnit = async ({
 
     return unit;
   } catch (error) {
-    //console.log(error);
+    ////console.log(error);
   }
 };
 export const getUnitOrdersServices = async ({
@@ -88,7 +88,7 @@ export const getUnitOrdersServices = async ({
       return ordersFetch;
     }
   } catch (error) {
-    //console.log(error);
+    ////console.log(error);
   }
 };
 
@@ -115,7 +115,7 @@ export const verifyIfEmailClientOsExist = async ({
     });
     if (client !== null) return client;
   } catch (error) {
-    console.log(error);
+    //console.log(error);
     return null;
   }
 };
@@ -142,11 +142,11 @@ export const verifyIfDocumentClientOsExist = async ({
       },
     });
 
-    console.log(client, document, "client", currentUnit, "currentUnit");
+    //console.log(client, document, "client", currentUnit, "currentUnit");
 
     return client;
   } catch (error) {
-    //console.log(error);
+    ////console.log(error);
     return null;
   }
 };

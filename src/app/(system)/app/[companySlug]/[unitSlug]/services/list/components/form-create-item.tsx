@@ -151,7 +151,7 @@ const FormCreateItem = ({
           ? employeeValue
           : currentItem?.employeeId,
     };
-    console.log(employeeValue);
+    //console.log(employeeValue);
 
     if (!currentItem) {
       toast.success("🎉 Item criado com sucesso");
@@ -208,7 +208,7 @@ const FormCreateItem = ({
       setEmployeeValue(currentItem?.employee);
       setStatus(currentItem?.status);
 
-      //console.log("currentItem", currentItem);
+      ////console.log("currentItem", currentItem);
     }
   }, [currentItem, setValue]);
 

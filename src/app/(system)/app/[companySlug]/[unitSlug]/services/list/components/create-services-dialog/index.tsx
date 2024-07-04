@@ -69,7 +69,7 @@ export function OrderServiceDialog({
   useEffect(() => {
     window.addEventListener("resize", () => {
       const getIfIsMobile = window.matchMedia("(max-width: 640px)");
-      //console.log(getIfIsMobile.matches);
+      ////console.log(getIfIsMobile.matches);
 
       setIsMobile(getIfIsMobile.matches);
     });
@@ -179,7 +179,7 @@ export function ItemsData({
         });
         const resultVerify = document !== verifyIfEmailExist?.document;
         if (verifyIfEmailExist && resultVerify) {
-          console.log(verifyIfEmailExist);
+          //console.log(verifyIfEmailExist);
           toast("Email já pertence ao outro cliente", {
             icon: <CircleAlert className="text-primary text-sm" />,
           });
@@ -195,7 +195,7 @@ export function ItemsData({
             },
           ]);
         } else {
-          console.log(verifyIfEmailExist);
+          //console.log(verifyIfEmailExist);
 
           setCurrentStep(2);
           setErrors([]);
@@ -205,7 +205,7 @@ export function ItemsData({
         toast("Faltam dados a serem preenchidos", {
           icon: <CircleAlert className="text-primary text-sm" />,
         });
-        console.log(error);
+        //console.log(error);
 
         setErrors(error);
       }
@@ -315,7 +315,7 @@ export function ItemsData({
       setOsStatus(currentOs.status);
       setZipCode(currentOs.UnitOrderServiceClient?.zipCode || "");
     }
-    //console.log(currentOs?.status);
+    ////console.log(currentOs?.status);
   }, [currentOs]);
 
   // ================= END MODE VIEW / EDIT =================
@@ -336,7 +336,7 @@ export function ItemsData({
   }, [confirmClose, onOpen]);
 
   const setDataCurrentClient = ({ result }: { result: any }) => {
-    console.log(result);
+    //console.log(result);
 
     setName(result.name);
     setEmail(result.email || "");
