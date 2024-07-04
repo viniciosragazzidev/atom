@@ -15,7 +15,7 @@ interface LayoutUnitAreaProps {
 const LayoutUnitArea = ({ children, params }: LayoutUnitAreaProps) => {
   return (
     <WrapperApp params={params}>
-      <div className="flex w-full ">
+      <div className="flex w-full h-screen overflow-hidden ">
         <AsideMenu params={params} />
         <div className="flex w-full flex-col divide-y divide-border/40">
           <AppNavbarHeader params={params} completeNav />

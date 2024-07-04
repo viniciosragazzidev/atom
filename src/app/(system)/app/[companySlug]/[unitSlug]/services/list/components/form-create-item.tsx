@@ -146,8 +146,12 @@ const FormCreateItem = ({
       accessories: accessories,
       garantyDays: garantyDaysValue,
       paymentType: paymentTypeValue,
-      employeeId: employeeValue ? employeeValue : currentItem?.employeeId,
+      employeeId:
+        employeeValue && employeeValue.length > 0
+          ? employeeValue
+          : currentItem?.employeeId,
     };
+    console.log(employeeValue);
 
     if (!currentItem) {
       toast.success("🎉 Item criado com sucesso");

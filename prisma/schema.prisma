@@ -180,7 +180,7 @@ model UnitOrderServiceItem {
   amountValue           String // Considere mudar para Decimal se for valor monetário
   garantyDays           String
   paymentType           String // Considere usar Enum se houver valores específicos permitidos
-  employeeId            String
+  employeeId            String?
   finallyDescription    String
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
