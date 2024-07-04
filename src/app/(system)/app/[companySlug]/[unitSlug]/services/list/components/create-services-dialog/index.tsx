@@ -256,7 +256,11 @@ export function ItemsData({
           setOnOpen(false);
         }
       } else {
-        const result = await updateOrder(osData);
+        const result = await updateOrder({
+          ...osData,
+          id: currentOs.id,
+          clientId: currentOs.unitOrderServiceClientId,
+        });
         if (result) {
           toast("Dados atualizados com sucesso", {});
           resetFields();

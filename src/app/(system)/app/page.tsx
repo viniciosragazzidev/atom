@@ -9,6 +9,7 @@ import { permanentRedirect } from "next/navigation";
 import { ProfileType } from "@/lib/@types";
 import { getProfileByProfileId } from "@/lib/services/requisitions";
 import TopStarsContainer from "./components/top-stars-container";
+import { cookies } from "next/headers";
 
 const AppHomePage = async () => {
   const session = await auth();

@@ -1,5 +1,7 @@
+"use server";
 import { ProfileType } from "@/lib/@types";
 import { auth } from "../../../../../auth";
+import { permanentRedirect } from "next/navigation";
 const path = process.env.PATHNAME;
 
 export const getCompanyAndUnits = async () => {
@@ -31,4 +33,16 @@ export const getCompanyAndUnits = async () => {
       company: [],
     };
   }
+};
+export const handleSelectUnit = async (data: FormData) => {
+  "use server";
+
+  const unitSlug = data.get("unit");
+
+  const company = [
+    {
+      slug: "atom",
+    },
+  ];
+  permanentRedirect(`/app/${company![0].slug!}/${unitSlug}`);
 };

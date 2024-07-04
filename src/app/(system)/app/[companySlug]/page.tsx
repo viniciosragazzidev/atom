@@ -12,6 +12,7 @@ import { FiPhoneCall } from "react-icons/fi";
 import { getProfileByProfileId } from "@/lib/services/requisitions";
 import TopStarsContainer from "../components/top-stars-container";
 import WrapperApp from "@/components/wrapper";
+import { cookies } from "next/headers";
 
 const AppHomePage = async ({ params }: { params: any }) => {
   const companyAndUnits: any[] = [];

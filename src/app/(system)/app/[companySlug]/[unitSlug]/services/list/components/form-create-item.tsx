@@ -138,6 +138,7 @@ const FormCreateItem = ({
   };
   const onSubmit = (data: any) => {
     const id = data.id ? data.id : undefined;
+
     const item = {
       ...data,
       id,
@@ -145,7 +146,7 @@ const FormCreateItem = ({
       accessories: accessories,
       garantyDays: garantyDaysValue,
       paymentType: paymentTypeValue,
-      employeeId: employeeValue,
+      employeeId: employeeValue ? employeeValue : currentItem?.employeeId,
     };
 
     if (!currentItem) {
@@ -157,7 +158,10 @@ const FormCreateItem = ({
       const itemsCopy = [...items];
       const index = itemsCopy.findIndex((i: any) => i.id === currentItem.id);
 
-      itemsCopy[index] = item;
+      itemsCopy[index] = {
+        ...item,
+        updatedAt: new Date(),
+      };
 
       setItems(itemsCopy);
       reset();
