@@ -172,7 +172,11 @@ export function ItemsData({
     if (currentStep === 1) {
       const verify = ClientServiceSchema.safeParse(data);
       if (verify.success) {
-        const verifyIfEmailExist = await verifyIfEmailClientOsExist(email);
+        const verifyIfEmailExist = await verifyIfEmailClientOsExist({
+          companySlug,
+          email,
+          unitSlug,
+        });
         const resultVerify = document !== verifyIfEmailExist?.document;
         if (verifyIfEmailExist && resultVerify) {
           console.log(verifyIfEmailExist);
@@ -327,25 +331,33 @@ export function ItemsData({
     };
   }, [confirmClose, onOpen]);
 
+  const setDataCurrentClient = ({ result }: { result: any }) => {
+    console.log(result);
+
+    setName(result.name);
+    setEmail(result.email || "");
+    setPhone(result.phone);
+    setDocument(result.document);
+    setStreet(result.street);
+    setNumberAddress(result.numberAddress);
+    setNeighborhoodAddress(result.neighborhoodAddress);
+    setCity(result.city);
+    setState(result.state);
+    setZipCode(result.zipCode);
+  };
   const verifyIfDocumentClientOsExistFunc = async () => {
     if (document.length === 11) {
-      const result = await verifyIfDocumentClientOsExist(document);
-      console.log(result);
+      const result = await verifyIfDocumentClientOsExist({
+        companySlug,
+        document,
+        unitSlug,
+      });
 
       if (result) {
         toast("Esse cliente ja existe no sistema! Importando...", {
           icon: <CircleAlert className="text-primary text-sm" />,
         });
-        setName(result.name);
-        setEmail(result.email || "");
-        setPhone(result.phone);
-        setDocument(result.document);
-        setStreet(result.street);
-        setNumberAddress(result.numberAddress);
-        setNeighborhoodAddress(result.neighborhoodAddress);
-        setCity(result.city);
-        setState(result.state);
-        setZipCode(result.zipCode);
+        setDataCurrentClient({ result });
       } else {
         toast("Esse cliente não existe no sistema!", {
           icon: <CircleAlert className="text-primary text-sm" />,
@@ -354,7 +366,9 @@ export function ItemsData({
     }
   };
   useEffect(() => {
-    verifyIfDocumentClientOsExistFunc();
+    if (!currentOs) {
+      verifyIfDocumentClientOsExistFunc();
+    }
   }, [document]);
 
   return (

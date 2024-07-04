@@ -92,11 +92,25 @@ export const getUnitOrdersServices = async ({
   }
 };
 
-export const verifyIfEmailClientOsExist = async (email: string) => {
+export const verifyIfEmailClientOsExist = async ({
+  email,
+  unitSlug,
+  companySlug,
+}: {
+  email: string;
+  unitSlug: string;
+  companySlug: string;
+}) => {
   try {
+    const currentUnit = await getCurrentUnit({
+      unitSlug: unitSlug,
+      companySlug: companySlug,
+    });
     const client = await db.unitOrderServiceClient.findFirst({
       where: {
         email: email,
+
+        unitId: currentUnit?.id,
       },
     });
     if (client !== null) return client;
@@ -106,13 +120,30 @@ export const verifyIfEmailClientOsExist = async (email: string) => {
   }
 };
 
-export const verifyIfDocumentClientOsExist = async (document: string) => {
+export const verifyIfDocumentClientOsExist = async ({
+  document,
+  unitSlug,
+  companySlug,
+}: {
+  document: string;
+  unitSlug: string;
+  companySlug: string;
+}) => {
   try {
+    const currentUnit = await getCurrentUnit({
+      unitSlug: unitSlug,
+      companySlug: companySlug,
+    });
     const client = await db.unitOrderServiceClient.findFirst({
       where: {
         document: document,
+
+        unitId: currentUnit?.id,
       },
     });
+
+    console.log(client, document, "client", currentUnit, "currentUnit");
+
     return client;
   } catch (error) {
     //console.log(error);

@@ -107,25 +107,26 @@ model Company {
 }
 
 model Unit {
-  id                  String             @id @default(cuid())
-  name                String
-  email               String
-  phone               String
-  userManagerId       String?
-  userManager         Profile?           @relation(fields: [userManagerId], references: [id])
-  street              String
-  numberAddress       String
-  neighborhoodAddress String
-  city                String
-  state               String
-  zipCode             String
-  slug                String
-  createdAt           DateTime           @default(now())
-  updatedAt           DateTime           @default(now())
-  employees           UnitEmployees[]
-  companyId           String?
-  company             Company?           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  UnitOrdersService   UnitOrderService[]
+  id                     String                   @id @default(cuid())
+  name                   String
+  email                  String
+  phone                  String
+  userManagerId          String?
+  userManager            Profile?                 @relation(fields: [userManagerId], references: [id])
+  street                 String
+  numberAddress          String
+  neighborhoodAddress    String
+  city                   String
+  state                  String
+  zipCode                String
+  slug                   String
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @default(now())
+  employees              UnitEmployees[]
+  companyId              String?
+  company                Company?                 @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  UnitOrdersService      UnitOrderService[]
+  UnitOrderServiceClient UnitOrderServiceClient[]
 }
 
 model UnitEmployees {
@@ -203,6 +204,8 @@ model UnitOrderServiceClient {
   createdAt           DateTime           @default(now())
   updatedAt           DateTime           @updatedAt
   UnitOrderServices   UnitOrderService[]
+  unitId              String?
+  unit                Unit?              @relation(fields: [unitId], references: [id])
 }
 
 model VerificationToken {
