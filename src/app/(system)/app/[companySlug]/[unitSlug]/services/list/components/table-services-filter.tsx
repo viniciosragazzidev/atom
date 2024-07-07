@@ -6,12 +6,16 @@ import { Input } from "@/components/ui/input";
 import { FiFilter, FiPlus, FiTag, FiX } from "react-icons/fi";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import AddService from "./add-service";
+import FilterPopover from "../../../components/filter-popover";
+import { constructUrl } from "@/lib/utils";
 const TableServicesFilter = () => {
   const router = useRouter();
   const path = usePathname();
   const searchParams = useSearchParams();
-  const page = searchParams.get("page") || "1";
-  const perPage = searchParams.get("perPage") || "5";
+  const page = searchParams.get("page") || "";
+  const perPage = searchParams.get("perPage") || "";
+  const f = searchParams.get("f") || "";
+  const q = searchParams.get("q") || "";
   return (
     <div className="flex w-full items-center justify-between">
       <div className="flex gap-3 items-center w-full ">
@@ -19,8 +23,8 @@ const TableServicesFilter = () => {
           onChange={(e) =>
             router.push(
               `${path}?page=${page}&perPage=${perPage}${
-                e.target.value ? `&q=${e.target.value}` : ""
-              }`
+                f || f.length > 0 ? f : ""
+              }${e.target.value ? `&q=${e.target.value}` : ""}`
             )
           }
           placeholder="Pesquisar serviço"
@@ -34,21 +38,20 @@ const TableServicesFilter = () => {
           <FiTag /> Tags
         </Button>
 
-        <Button
-          size={"sm"}
-          variant="default"
-          className=" flex items-center gap-1"
-        >
-          <FiFilter /> Filtros
-        </Button>
+        <FilterPopover />
 
-        <Button
-          variant="ghost"
-          size={"sm"}
-          className=" opacity-55 flex items-center gap-1"
-        >
-          <FiX /> Reset
-        </Button>
+        {f.length > 0 && (
+          <Button
+            variant="ghost"
+            size={"sm"}
+            className=" opacity-55 flex items-center gap-1"
+            onClick={() =>
+              router.push(constructUrl({ path, f: "", page, perPage, q }))
+            }
+          >
+            <FiX /> Limpar
+          </Button>
+        )}
       </div>
 
       <div className="flex gap-3 items-center w-full justify-end pr-3">

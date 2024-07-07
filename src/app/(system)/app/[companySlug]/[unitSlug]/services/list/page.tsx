@@ -19,6 +19,7 @@ const ListServices = async ({
   const page = searchParams["page"] || "1";
   const perPage = searchParams["perPage"] || "5";
   const search = searchParams["q"] || "";
+  const f = searchParams["f"] || "";
 
   const start = (Number(page) - 1) * Number(perPage);
   const end = start + Number(perPage);
@@ -27,6 +28,7 @@ const ListServices = async ({
     search: String(search),
     page: String(page),
     perPage: String(perPage),
+    f: String(f),
   };
   const fetchServices = await getUnitOrdersServices({
     unitSlug: params.unitSlug,

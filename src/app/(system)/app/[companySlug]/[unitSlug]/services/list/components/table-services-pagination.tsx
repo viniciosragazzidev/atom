@@ -35,6 +35,7 @@ const TableServicesPagination = ({
   const page = searchParams.get("page") || "1";
   const perPage = searchParams.get("perPage") || "5";
   const q = searchParams.get("q") || "";
+  const f = searchParams.get("f") || "";
 
   return (
     <div className="flex justify-end w-full text-sm pr-16">
@@ -69,8 +70,8 @@ const TableServicesPagination = ({
             onClick={() =>
               router.push(
                 `${path}?page=1&perPage=${perPage}${
-                  q && q.length > 0 ? `&q=${q}` : q
-                }`
+                  f || f.length > 0 ? f : ""
+                }${q && q.length > 0 ? `&q=${q}` : q}`
               )
             }
             size={"sm"}
@@ -84,8 +85,8 @@ const TableServicesPagination = ({
             onClick={() =>
               router.push(
                 `${path}?page=${Number(page) - 1}&perPage=${perPage}${
-                  q && q.length > 0 ? `&q=${q}` : q
-                }`
+                  f || f.length > 0 ? f : ""
+                }${q && q.length > 0 ? `&q=${q}` : q}`
               )
             }
             size={"sm"}
@@ -99,8 +100,8 @@ const TableServicesPagination = ({
             onClick={() =>
               router.push(
                 `${path}?page=${Number(page) + 1}&perPage=${perPage}${
-                  q && q.length > 0 ? `&q=${q}` : q
-                }`
+                  f || f.length > 0 ? f : ""
+                }${q && q.length > 0 ? `&q=${q}` : q}`
               )
             }
             size={"sm"}
@@ -115,7 +116,9 @@ const TableServicesPagination = ({
               router.push(
                 `${path}?page=${Math.ceil(
                   entries?.total_pages
-                )}&perPage=${perPage}${q && q.length > 0 ? `&q=${q}` : q}`
+                )}&perPage=${perPage}${f || f.length > 0 ? f : ""}${
+                  q && q.length > 0 ? `&q=${q}` : q
+                }`
               )
             }
             size={"sm"}

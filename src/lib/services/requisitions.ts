@@ -60,6 +60,7 @@ export const getUnitOrdersServices = async ({
     search: string;
     page: string;
     perPage: string;
+    f: string;
   };
 }) => {
   try {
@@ -70,10 +71,14 @@ export const getUnitOrdersServices = async ({
     const page = filters.page;
     const perPage = filters.perPage;
 
+    const f = filters.f;
+
     if (unit) {
       const unitId = unit.id!;
       const ordersFetch = await fetch(
-        `${path}/api/services/${unitId}?page=${page}&perPage=${perPage}&q=${search}`,
+        `${path}/api/services/${unitId}?page=${page}&perPage=${perPage}${
+          f || f.length > 0 ? f : ""
+        }&q=${search}`,
         {
           method: "GET",
           headers: {

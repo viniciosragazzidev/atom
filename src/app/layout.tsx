@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { GeistSans } from "geist/font/sans";
 
 import { ThemeProvider } from "next-themes";
 import Floating from "@/components/floating";
@@ -17,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.className}  relative`}>
+    <html lang="en" className={`relative`}>
       <body>
         <ThemeProvider
           attribute="class"
