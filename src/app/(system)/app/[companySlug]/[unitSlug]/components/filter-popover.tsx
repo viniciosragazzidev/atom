@@ -44,7 +44,7 @@ const FilterPopover = () => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link
-            href={constructUrl({ path, f: "aberto", q, page, perPage })}
+            href={constructUrl({ path, f: "Aberto", q, page, perPage })}
             className="cursor-pointer w-full px-2 hover:bg-secondary py-2  rounded-md"
           >
             Abertos
@@ -52,7 +52,7 @@ const FilterPopover = () => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link
-            href={constructUrl({ path, f: "fechado", q, page, perPage })}
+            href={constructUrl({ path, f: "Fechado", q, page, perPage })}
             className="cursor-pointer w-full px-2 hover:bg-secondary py-2  rounded-md"
           >
             Fechados
@@ -60,7 +60,7 @@ const FilterPopover = () => {
         </DropdownMenuItem>
         <DropdownMenuItem>
           <Link
-            href={constructUrl({ path, f: "pronto", q, page, perPage })}
+            href={constructUrl({ path, f: "Pronto", q, page, perPage })}
             className="cursor-pointer w-full px-2 hover:bg-secondary py-2  rounded-md"
           >
             Prontos

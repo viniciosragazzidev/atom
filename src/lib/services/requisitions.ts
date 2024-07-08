@@ -72,12 +72,13 @@ export const getUnitOrdersServices = async ({
     const perPage = filters.perPage;
 
     const f = filters.f;
+    console.log(f);
 
     if (unit) {
       const unitId = unit.id!;
       const ordersFetch = await fetch(
         `${path}/api/services/${unitId}?page=${page}&perPage=${perPage}${
-          f || f.length > 0 ? f : ""
+          f || f.length > 0 ? "&f=" + f : ""
         }&q=${search}`,
         {
           method: "GET",
@@ -86,7 +87,7 @@ export const getUnitOrdersServices = async ({
           },
           next: {
             revalidate: 1000,
-            tags: ["orders", unitId, page, perPage, search],
+            tags: ["orders", unitId, page, perPage, search, f],
           },
         }
       ).then((res) => res.json());

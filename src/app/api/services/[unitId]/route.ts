@@ -11,13 +11,16 @@ export async function GET(
   const perPage = parseInt(request.nextUrl.searchParams.get("perPage") || "5");
   const offset = (page - 1) * perPage;
   const search = request.nextUrl.searchParams.get("q") || "";
+  const filter = request.nextUrl.searchParams.get("f") || "";
   try {
-    //console.log(search);
+    console.log(filter);
 
     const orders = await db.unitOrderService.findMany({
       where: {
         unitId: String(unitId), // Convert unitId to a number
-
+        status: {
+          contains: filter,
+        },
         AND: {
           OR: [
             {
