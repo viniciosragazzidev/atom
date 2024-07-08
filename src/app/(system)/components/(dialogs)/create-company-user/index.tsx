@@ -347,7 +347,7 @@ export function ItemsData({
                 className={`flex flex-col gap-4 ${
                   currentStep !== 1
                     ? "relative opacity-100 translate-x-0"
-                    : "opacity-0 absolute translate-x-[100%]"
+                    : "opacity-0 absolute translate-x-[1000px]"
                 } transition-all`}
               >
                 <div className="flex flex-col gap-2 relative">

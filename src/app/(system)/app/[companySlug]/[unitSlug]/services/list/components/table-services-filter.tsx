@@ -8,6 +8,8 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import AddService from "./add-service";
 import FilterPopover from "../../../components/filter-popover";
 import { constructUrl } from "@/lib/utils";
+import { BiSync } from "react-icons/bi";
+import SyncDataButton from "@/components/sync-data-button";
 const TableServicesFilter = () => {
   const router = useRouter();
   const path = usePathname();
@@ -55,9 +57,8 @@ const TableServicesFilter = () => {
       </div>
 
       <div className="flex gap-3 items-center w-full justify-end pr-3">
-        <span className="text-sm text-muted-foreground">
-          0 de 5 serviços selecionados
-        </span>
+        <SyncDataButton tag="orders" />
+
         <AddService>
           {" "}
           <FiPlus />{" "}

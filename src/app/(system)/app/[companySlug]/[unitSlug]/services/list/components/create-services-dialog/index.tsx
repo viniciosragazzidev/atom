@@ -1,3 +1,4 @@
+"use client";
 import { AlertDialog, AlertDialogContent } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,12 +22,12 @@ import {
 } from "./services-dialog-schema";
 import ErrorMessage from "@/components/error-message";
 import { CircleAlert } from "lucide-react";
-import { sendOrder, updateOrder } from "./actions/action";
+import { deleteOrder, sendOrder, updateOrder } from "./actions/action";
 import { PiSpinner } from "react-icons/pi";
 import { Drawer, DrawerContent } from "@/components/ui/drawer";
 import { errorFieldVerify } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { FiEye, FiPlus } from "react-icons/fi";
+import { FiEye, FiPlus, FiTrash2 } from "react-icons/fi";
 import {
   Table,
   TableBody,
@@ -276,6 +277,21 @@ export function ItemsData({
     }
   };
 
+  const handleDeleteOs = async () => {
+    if (currentOs) {
+      const confirmDelete = window.confirm("Tem certeza que deseja deletar?");
+      if (confirmDelete) {
+        const result = await deleteOrder({ os: currentOs });
+        setSubmitLoading(true);
+        if (result.length > 0) {
+          setSubmitLoading(false);
+          setOnOpen(false);
+
+          resetFields();
+        }
+      }
+    }
+  };
   const resetFields = () => {
     setName("");
     setPhone("");
@@ -800,26 +816,37 @@ export function ItemsData({
                 >
                   Voltar
                 </Button>
-                <Button
-                  type="button"
-                  disabled={submitLoading}
-                  className={`${currentStep === 1 ? "block" : "hidden"}`}
-                  onClick={handleNextStep}
-                >
-                  Próximo
-                </Button>
-                <Button
-                  type="button"
-                  disabled={submitLoading}
-                  onClick={handleSubmit}
-                  className={`${currentStep !== 1 ? "block" : "hidden"}`}
-                >
-                  {submitLoading ? (
-                    <PiSpinner className="w-4 h-4 animate-spin " />
-                  ) : (
-                    "Concluir"
-                  )}
-                </Button>
+                <div className="flex items-center gap-5">
+                  <Button
+                    type="button"
+                    variant={"destructive"}
+                    disabled={submitLoading}
+                    className={`${currentOs ? "block" : "hidden"}`}
+                    onClick={handleDeleteOs}
+                  >
+                    <FiTrash2 className="text-red-500" />
+                  </Button>
+                  <Button
+                    type="button"
+                    disabled={submitLoading}
+                    className={`${currentStep === 1 ? "block" : "hidden"}`}
+                    onClick={handleNextStep}
+                  >
+                    Próximo
+                  </Button>
+                  <Button
+                    type="button"
+                    disabled={submitLoading}
+                    onClick={handleSubmit}
+                    className={`${currentStep !== 1 ? "block" : "hidden"}`}
+                  >
+                    {submitLoading ? (
+                      <PiSpinner className="w-4 h-4 animate-spin " />
+                    ) : (
+                      "Concluir"
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
           </div>

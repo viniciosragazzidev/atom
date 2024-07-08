@@ -203,3 +203,25 @@ export const updateOrder = async (data: any) => {
     return [];
   }
 };
+
+export const deleteOrder = async ({ os }: { os: unitOrderServiceType }) => {
+  try {
+    const deleteOrder = await db.unitOrderService.delete({
+      where: {
+        id: os.id,
+        unitId: os.unitid,
+      },
+    });
+
+    revalidateTag("orders");
+
+    return JSON.stringify({
+      status: 200,
+      message: "success",
+      orderId: deleteOrder.id,
+    });
+  } catch (error) {
+    //console.log(error);
+    return [];
+  }
+};
